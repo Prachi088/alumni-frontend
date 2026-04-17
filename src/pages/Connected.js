@@ -13,7 +13,7 @@ function Connected() {
       .then((res) => res.json())
       .then((data) => setConnections(data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [userId]);
 
   return (
     <div style={styles.container}>

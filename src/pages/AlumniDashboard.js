@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 const C = {
   navy:"#0B1D35", navy2:"#112444", navy3:"#1a3258",
@@ -71,12 +71,12 @@ function AlumniDashboard() {
   const flash = (text) => { setMsg(text); setTimeout(()=>setMsg(""), 3000); };
 
   const fetchData = () => {
-    fetch("${API_URL}/api/jobs")
+    fetch(`${API_URL}/api/jobs`)
       .then(r=>r.json())
       .then(data=>setJobs(data.filter(j=>j.postedBy===alumniId)))
       .catch(()=>{});
 
-    fetch("${API_URL}/api/events")
+    fetch(`${API_URL}/api/events`)
       .then(r=>r.json())
       .then(data=>setEvents(data.filter(e=>e.postedBy===alumniId)))
       .catch(()=>{});
@@ -94,7 +94,7 @@ function AlumniDashboard() {
     if (!newJob.title || !newJob.company) { flash("⚠ Title and Company are required"); return; }
     setLoading(true);
     try {
-      const res = await fetch("${API_URL}/api/jobs", {
+      const res = await fetch(`${API_URL}/api/jobs`, {
         method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({ ...newJob, postedBy: alumniId }),
       });
@@ -110,7 +110,7 @@ function AlumniDashboard() {
     if (!newEvent.name || !newEvent.date) { flash("⚠ Name and Date are required"); return; }
     setLoading(true);
     try {
-      const res = await fetch("${API_URL}/api/events", {
+      const res = await fetch(`${API_URL}/api/events`, {
         method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({ ...newEvent, postedBy: alumniId }),
       });
