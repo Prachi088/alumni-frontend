@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 function Connected() {
   const [connections, setConnections] = useState([]);

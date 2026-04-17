@@ -60,7 +60,7 @@
 
 //   const applyJob = async (job) => {
 //     if (appliedIds.includes(job.id)) { showFlash("Already applied!", false); return; }
-//     const res = await fetch(`http://localhost:9090/api/jobs/${job.id}/apply`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
+//     const res = await fetch(`http://localhost:8080/api/jobs/${job.id}/apply`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
 //     if (res.ok) {
 //       const updated = [...appliedIds, job.id];
 //       setApplied(updated); localStorage.setItem("appliedJobIds", JSON.stringify(updated));
@@ -70,7 +70,7 @@
 
 //   const registerEvent = async (event) => {
 //     if (regIds.includes(event.id)) { showFlash("Already registered!", false); return; }
-//     const res = await fetch(`http://localhost:9090/api/events/${event.id}/register`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
+//     const res = await fetch(`http://localhost:8080/api/events/${event.id}/register`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
 //     if (res.ok) {
 //       const updated = [...regIds, event.id];
 //       setRegIds(updated); localStorage.setItem("registeredEventIds", JSON.stringify(updated));
@@ -296,7 +296,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 const C = {
   navy:  "#0B1D35", navy2: "#112444", navy3: "#1a3258",

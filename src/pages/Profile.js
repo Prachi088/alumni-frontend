@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const C = { navy:"#0B1D35", navy2:"#112444", gold:"#C8963E", gold2:"#E8B55A", muted:"#8A9AB5", white:"#FFFFFF" };
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);

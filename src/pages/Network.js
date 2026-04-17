@@ -1,6 +1,6 @@
  import React, { useState, useEffect } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 function Network() {
   const [alumni, setAlumni] = useState([]);
