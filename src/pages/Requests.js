@@ -57,28 +57,28 @@ function Requests() {
 }
 
 const styles = {
-  container: { paddingTop: "100px", display: "flex", justifyContent: "center", background: "#f8fafc", minHeight: "100vh" },
-  content:   { width: "100%", maxWidth: "900px" },
-  heading:   { marginBottom: "20px", color: "#1e293b" },
-  empty:     { color: "#64748b" },
-  grid:      { display: "flex", flexDirection: "column", gap: "15px" },
+  container: { paddingTop: "100px", display: "flex", justifyContent: "center", background: "linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%)", minHeight: "100vh" },
+  content:   { width: "100%", maxWidth: "900px", padding:"0 32px" },
+  heading:   { marginBottom: "28px", color: "#1e293b", fontSize:"32px", fontWeight:"800" },
+  empty:     { color: "#64748b", fontSize:"16px" },
+  grid:      { display: "flex", flexDirection: "column", gap: "16px" },
   card: {
-    background: "#fff", padding: "15px", borderRadius: "10px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
-    display: "flex", justifyContent: "space-between", alignItems: "center",
+    background: "linear-gradient(135deg, #fff 0%, #f9fafb 100%)", padding: "20px", borderRadius: "12px",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.06)", border:"1px solid rgba(99,102,241,0.08)",
+    display: "flex", justifyContent: "space-between", alignItems: "center", transition:"all 0.3s"
   },
-  profile: { display: "flex", alignItems: "center", gap: "12px" },
+  profile: { display: "flex", alignItems: "center", gap: "16px" },
   avatar: {
-    width: "45px", height: "45px", borderRadius: "50%",
-    background: "linear-gradient(135deg,#6366f1,#818cf8)",
+    width: "50px", height: "50px", borderRadius: "50%",
+    background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
     display: "flex", alignItems: "center", justifyContent: "center",
-    fontWeight: 700, fontSize: 16, color: "#fff",
+    fontWeight: 800, fontSize: 18, color: "#fff",
   },
-  name:      { margin: 0, fontSize: "15px", fontWeight: "600", color: "#0f172a" },
-  role:      { margin: "2px 0 0", fontSize: "13px", color: "#64748b" },
-  actions:   { display: "flex", gap: "10px" },
-  acceptBtn: { background: "#16a34a", color: "#fff", border: "none", padding: "6px 14px", borderRadius: "6px", cursor: "pointer", fontWeight: 600 },
-  rejectBtn: { background: "#dc2626", color: "#fff", border: "none", padding: "6px 14px", borderRadius: "6px", cursor: "pointer", fontWeight: 600 },
+  name:      { margin: 0, fontSize: "15px", fontWeight: "700", color: "#1e293b" },
+  role:      { margin: "4px 0 0", fontSize: "13px", color: "#64748b" },
+  actions:   { display: "flex", gap: "12px" },
+  acceptBtn: { background: "linear-gradient(135deg, #10b981, #34d399)", color: "#fff", border: "none", padding: "8px 16px", borderRadius: "8px", cursor: "pointer", fontWeight: 700, fontSize:"13px", transition:"all 0.3s", boxShadow:"0 4px 12px rgba(16,185,129,0.2)" },
+  rejectBtn: { background: "linear-gradient(135deg, #ef4444, #f87171)", color: "#fff", border: "none", padding: "8px 16px", borderRadius: "8px", cursor: "pointer", fontWeight: 700, fontSize:"13px", transition:"all 0.3s", boxShadow:"0 4px 12px rgba(239,68,68,0.2)" },
 };
 
 export default Requests;

@@ -42,25 +42,25 @@ function Connected() {
 }
 
 const styles = {
-  container: { paddingTop: "100px", display: "flex", justifyContent: "center", background: "#f8fafc", minHeight: "100vh" },
-  content:   { width: "100%", maxWidth: "900px" },
-  heading:   { marginBottom: "20px", color: "#1e293b" },
-  empty:     { color: "#64748b" },
-  grid:      { display: "flex", flexWrap: "wrap", gap: "20px" },
+  container: { paddingTop: "100px", display: "flex", justifyContent: "center", background: "linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%)", minHeight: "100vh" },
+  content:   { width: "100%", maxWidth: "1000px", padding:"0 32px" },
+  heading:   { marginBottom: "28px", color: "#1e293b", fontSize:"32px", fontWeight:"800" },
+  empty:     { color: "#64748b", fontSize:"16px" },
+  grid:      { display: "flex", flexWrap: "wrap", gap: "24px" },
   card: {
-    background: "#fff", padding: "20px", borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.08)", width: "220px",
-    display: "flex", gap: "12px", alignItems: "center",
+    background: "linear-gradient(135deg, #fff 0%, #f9fafb 100%)", padding: "20px", borderRadius: "12px",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.06)", width: "280px", border:"1px solid rgba(99,102,241,0.08)",
+    display: "flex", gap: "16px", alignItems: "flex-start", transition:"all 0.3s"
   },
   avatar: {
-    width: "50px", height: "50px", borderRadius: "50%",
-    background: "linear-gradient(135deg,#6366f1,#818cf8)",
+    width: "56px", height: "56px", borderRadius: "50%",
+    background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
     display: "flex", alignItems: "center", justifyContent: "center",
-    fontWeight: 700, fontSize: 18, color: "#fff", flexShrink: 0,
+    fontWeight: 800, fontSize: 20, color: "#fff", flexShrink: 0,
   },
-  name:  { margin: 0, fontSize: "15px", fontWeight: "600" },
-  role:  { margin: "2px 0 0", fontSize: "13px", color: "#64748b" },
-  badge: { display: "inline-block", marginTop: "5px", fontSize: "12px", color: "#16a34a", fontWeight: "600" },
+  name:  { margin: 0, fontSize: "15px", fontWeight: "700", color:"#6366f1" },
+  role:  { margin: "4px 0 0", fontSize: "13px", color: "#64748b" },
+  badge: { display: "inline-block", marginTop: "6px", fontSize: "12px", color: "#10b981", fontWeight: "700", background:"rgba(16,185,129,0.1)", padding:"3px 8px", borderRadius:"5px" },
 };
 
 export default Connected;

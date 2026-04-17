@@ -12,12 +12,14 @@ function Navbar() {
   };
 
   const linkStyle = (path) => ({
-    margin: "0 10px",
+    margin: "0 12px",
     textDecoration: "none",
-    color: location.pathname === path ? "#ffd700" : "#e2e8f0",
-    fontWeight: location.pathname === path ? "600" : "400",
+    color: location.pathname === path ? "#6366f1" : "#64748b",
+    fontWeight: location.pathname === path ? "700" : "500",
     fontSize: "14px",
-    transition: "0.3s",
+    transition: "all 0.3s ease",
+    paddingBottom: location.pathname === path ? "2px" : "0px",
+    borderBottom: location.pathname === path ? "2px solid #6366f1" : "2px solid transparent",
   });
 
   return (
@@ -55,13 +57,13 @@ function Navbar() {
 }
 
 const styles = {
-  navbar:    { position:"sticky", top:0, zIndex:1000, height:"70px", background:"#1e293b", color:"#fff", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 40px", boxShadow:"0 2px 10px rgba(0,0,0,0.2)" },
-  logo:      { fontSize:"17px", fontWeight:"700", letterSpacing:"0.5px", display:"flex", alignItems:"center", gap:10 },
-  roleBadge: { fontSize:"11px", padding:"3px 10px", borderRadius:20, fontWeight:700, color:"#0B1D35" },
+  navbar:    { position:"sticky", top:0, zIndex:1000, height:"70px", background:"linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%)", color:"#1e293b", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 40px", boxShadow:"0 4px 20px rgba(0,0,0,0.08)", backdropFilter:"blur(10px)" },
+  logo:      { fontSize:"18px", fontWeight:"800", letterSpacing:"0.5px", display:"flex", alignItems:"center", gap:10, color:"#6366f1" },
+  roleBadge: { fontSize:"11px", padding:"4px 12px", borderRadius:20, fontWeight:700, color:"#fff", background:"linear-gradient(135deg, #6366f1, #8b5cf6)", border:"1px solid rgba(99,102,241,0.3)" },
   links:     { display:"flex", alignItems:"center" },
   right:     { display:"flex", alignItems:"center", gap:15 },
-  profile:   { fontSize:"20px", cursor:"pointer" },
-  logout:    { padding:"6px 14px", background:"#ef4444", color:"#fff", border:"none", borderRadius:"6px", cursor:"pointer", fontWeight:600 },
+  profile:   { fontSize:"20px", cursor:"pointer", opacity:0.7, transition:"opacity 0.3s" },
+  logout:    { padding:"8px 16px", background:"linear-gradient(135deg, #ef4444, #f87171)", color:"#fff", border:"none", borderRadius:"8px", cursor:"pointer", fontWeight:600, transition:"all 0.3s", boxShadow:"0 4px 12px rgba(239,68,68,0.2)" },
 };
 
 export default Navbar;

@@ -85,21 +85,21 @@ function Network() {
 }
 
 const styles = {
-  container:   { padding: "30px", background: "#f8fafc", minHeight: "100vh", paddingTop: "100px" },
-  heading:     { color: "#1e293b", marginBottom: "20px" },
-  search:      { padding: "10px", width: "300px", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "20px" },
-  grid:        { display: "flex", flexWrap: "wrap", gap: "20px" },
-  card:        { background: "#fff", padding: "20px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.08)", width: "200px", textAlign: "center" },
+  container:   { padding: "32px", background: "linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%)", minHeight: "100vh", paddingTop: "100px" },
+  heading:     { color: "#1e293b", marginBottom: "28px", fontSize:"32px", fontWeight:"800" },
+  search:      { padding: "12px 16px", width: "100%", maxWidth:"400px", borderRadius: "10px", border: "1px solid rgba(99,102,241,0.2)", marginBottom: "28px", background:"#fff", color:"#1e293b", fontSize:"14px", outline:"none", transition:"all 0.3s", boxShadow:"0 2px 8px rgba(0,0,0,0.06)" },
+  grid:        { display: "flex", flexWrap: "wrap", gap: "24px" },
+  card:        { background: "linear-gradient(135deg, #fff 0%, #f9fafb 100%)", padding: "24px", borderRadius: "14px", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", width: "240px", textAlign: "center", border:"1px solid rgba(99,102,241,0.08)", transition:"all 0.3s" },
   avatar: {
-    width: 50, height: 50, borderRadius: "50%",
-    background: "linear-gradient(135deg,#6366f1,#818cf8)",
+    width: 60, height: 60, borderRadius: "50%",
+    background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
     display: "flex", alignItems: "center", justifyContent: "center",
-    fontWeight: 700, fontSize: 18, color: "#fff", margin: "0 auto 10px",
+    fontWeight: 800, fontSize: 20, color: "#fff", margin: "0 auto 16px",
   },
-  title:       { fontSize: "15px", fontWeight: "600", margin: "0 0 4px" },
-  text:        { fontSize: "13px", color: "#64748b", margin: "2px 0" },
-  button:      { marginTop: "10px", padding: "8px", width: "100%", background: "#2563eb", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: 600 },
-  disabledBtn: { marginTop: "10px", padding: "8px", width: "100%", background: "#94a3b8", color: "#fff", border: "none", borderRadius: "6px", cursor: "not-allowed" },
+  title:       { fontSize: "16px", fontWeight: "700", margin: "0 0 8px", color:"#6366f1" },
+  text:        { fontSize: "13px", color: "#64748b", margin: "4px 0" },
+  button:      { marginTop: "16px", padding: "10px 16px", width: "100%", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: 700, fontSize:"13px", transition:"all 0.3s", boxShadow:"0 4px 12px rgba(99,102,241,0.25)" },
+  disabledBtn: { marginTop: "16px", padding: "10px 16px", width: "100%", background: "#e2e8f0", color: "#94a3b8", border: "1px solid #cbd5e1", borderRadius: "8px", cursor: "not-allowed", fontWeight:700, fontSize:"13px" },
 };
 
 export default Network;
