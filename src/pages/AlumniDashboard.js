@@ -63,6 +63,7 @@ function AlumniDashboard() {
   const [newEvent,    setNewEvent]    = useState({ name:"", date:"", location:"" });
   const [loading,     setLoading]     = useState(false);
   const [msg,         setMsg]         = useState("");
+  const [apiError,    setApiError]    = useState(null);
 
   const alumniId   = Number(localStorage.getItem("userId")) || 1;
   const alumniName = localStorage.getItem("name") || localStorage.getItem("userName") || "Alumni";
@@ -71,21 +72,23 @@ function AlumniDashboard() {
   const flash = (text) => { setMsg(text); setTimeout(()=>setMsg(""), 3000); };
 
   const fetchData = () => {
+    setApiError(null);
+
     fetch(`${API_URL}/api/jobs`)
       .then(r=>r.json())
       .then(data=>setJobs(data.filter(j=>j.postedBy===alumniId)))
-      .catch(()=>{});
+      .catch(()=>setApiError("Backend not reachable"));
 
     fetch(`${API_URL}/api/events`)
       .then(r=>r.json())
       .then(data=>setEvents(data.filter(e=>e.postedBy===alumniId)))
-      .catch(()=>{});
+      .catch(()=>setApiError("Backend not reachable"));
 
     fetch(`${API_URL}/api/connections/accepted/${alumniId}`)
-      .then(r=>r.json()).then(setConnections).catch(()=>{});
+      .then(r=>r.json()).then(setConnections).catch(()=>setApiError("Backend not reachable"));
 
     fetch(`${API_URL}/api/connections/pending/${alumniId}`)
-      .then(r=>r.json()).then(setRequests).catch(()=>{});
+      .then(r=>r.json()).then(setRequests).catch(()=>setApiError("Backend not reachable"));
   };
 
   useEffect(() => { fetchData(); }, [alumniId]);
@@ -379,6 +382,11 @@ function AlumniDashboard() {
           </div>
 
           <div style={S.content}>
+            {apiError && (
+              <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
+                ❌ {apiError} — Check API_URL or backend status
+              </div>
+            )}
             {msg && <div style={{ background:"rgba(200,150,62,0.15)", border:"1px solid rgba(200,150,62,0.3)", color:C.gold2, padding:"10px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>{msg}</div>}
             {renderContent()}
           </div>

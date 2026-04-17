@@ -455,13 +455,17 @@ export default function StudentDashboard() {
   const [sentIds,    setSentIds]  = useState(() => JSON.parse(localStorage.getItem("sentRequestIds") || "[]"));
   const [flash,      setFlash]    = useState(null);
   const [search,     setSearch]   = useState("");
+  const [apiError,   setApiError] = useState(null);
 
   const showFlash = (msg, ok = true) => { setFlash({ msg, ok }); setTimeout(() => setFlash(null), 3000); };
 
   const fetchAll = () => {
-    fetch(`${API_URL}/api/jobs`).then(r => r.json()).then(setJobs).catch(() => {});
-    fetch(`${API_URL}/api/events`).then(r => r.json()).then(setEvents).catch(() => {});
-    fetch(`${API_URL}/api/users`).then(r => r.json()).then(d => setAlumni(d.filter(u => u.role === "alumni"))).catch(() => {});
+    setApiError(null);
+    let successCount = 0;
+
+    fetch(`${API_URL}/api/jobs`).then(r => r.json()).then(setJobs).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
+    fetch(`${API_URL}/api/events`).then(r => r.json()).then(setEvents).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
+    fetch(`${API_URL}/api/users`).then(r => r.json()).then(d => setAlumni(d.filter(u => u.role === "alumni"))).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
   };
 
   useEffect(() => { fetchAll(); }, []);
@@ -574,6 +578,11 @@ export default function StudentDashboard() {
           </div>
 
           <div style={S.content}>
+            {apiError && (
+              <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
+                ❌ {apiError} — Check API_URL or backend status
+              </div>
+            )}
             {flash && (
               <div style={{ ...S.flash, background: flash.ok ? "rgba(76,175,80,0.15)" : "rgba(239,68,68,0.15)", color: flash.ok ? "#81C784" : "#ef9a9a", border:`1px solid ${flash.ok ? "#81C784" : "#ef9a9a"}` }}>
                 {flash.ok ? "✅" : "❌"} {flash.msg}
