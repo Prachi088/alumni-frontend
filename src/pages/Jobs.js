@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -10,7 +12,7 @@ function Jobs() {
   const appliedIds = JSON.parse(localStorage.getItem("appliedJobIds") || "[]");
 
   useEffect(() => {
-    fetch("http://localhost:9090/api/jobs")
+    fetch(`${API_URL}/api/jobs`)
       .then(r => r.json())
       .then(data => setJobs(data.map(j => ({ ...j, applied: appliedIds.includes(j.id) }))))
       .catch(() => {
@@ -38,7 +40,7 @@ function Jobs() {
   const handleAddJob = async () => {
     if (!newJob.title || !newJob.company) return;
     try {
-      const res = await fetch("http://localhost:9090/api/jobs", {
+      const res = await fetch(`${API_URL}/api/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...newJob, postedBy: userId }),
@@ -52,7 +54,7 @@ function Jobs() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:9090/api/jobs/${id}`, { method: "DELETE" }).catch(()=>{});
+    await fetch(`${API_URL}/api/jobs/${id}`, { method: "DELETE" }).catch(()=>{});
     setJobs(prev => prev.filter(j => j.id !== id));
   };
 

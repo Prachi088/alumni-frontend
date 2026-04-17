@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function MyEvents() {
   const [events, setEvents] = useState([]);
 
@@ -8,7 +10,7 @@ function MyEvents() {
 
     if (registeredIds.length === 0) { setEvents([]); return; }
 
-    fetch("http://localhost:9090/api/events")
+    fetch(`${API_URL}/api/events`)
       .then(r => r.json())
       .then(data => setEvents(data.filter(e => registeredIds.includes(e.id))))
       .catch(() => {});

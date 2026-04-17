@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Events() {
   const [events, setEvents] = useState([]);
   const [newEvent, setNewEvent] = useState({ name:"", date:"", location:"" });
@@ -9,7 +11,7 @@ function Events() {
   const registeredIds = JSON.parse(localStorage.getItem("registeredEventIds") || "[]");
 
   useEffect(() => {
-    fetch("http://localhost:9090/api/events")
+    fetch(`${API_URL}/api/events`)
       .then(r => r.json())
       .then(data => setEvents(data.map(e => ({ ...e, registered: registeredIds.includes(e.id) }))))
       .catch(() => {
@@ -31,7 +33,7 @@ function Events() {
   const handleAddEvent = async () => {
     if (!newEvent.name || !newEvent.date) return;
     try {
-      const res = await fetch("http://localhost:9090/api/events", {
+      const res = await fetch(`${API_URL}/api/events`, {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({ ...newEvent, postedBy: userId }),
@@ -45,7 +47,7 @@ function Events() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:9090/api/events/${id}`, { method:"DELETE" }).catch(()=>{});
+    await fetch(`${API_URL}/api/events/${id}`, { method:"DELETE" }).catch(()=>{});
     setEvents(prev => prev.filter(e => e.id !== id));
   };
 

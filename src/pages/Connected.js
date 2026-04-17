@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Connected() {
   const [connections, setConnections] = useState([]);
 
@@ -7,7 +9,7 @@ function Connected() {
   const userId = Number(localStorage.getItem("userId")) || 1;
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/connections/accepted/${userId}`)
+    fetch(`${API_URL}/api/connections/accepted/${userId}`)
       .then((res) => res.json())
       .then((data) => setConnections(data))
       .catch((err) => console.error(err));

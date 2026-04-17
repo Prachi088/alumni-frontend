@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function MyJobs() {
   const [jobs, setJobs] = useState([]);
 
@@ -8,7 +10,7 @@ function MyJobs() {
 
     if (appliedIds.length === 0) { setJobs([]); return; }
 
-    fetch("http://localhost:9090/api/jobs")
+    fetch(`${API_URL}/api/jobs`)
       .then(r => r.json())
       .then(data => setJobs(data.filter(j => appliedIds.includes(j.id))))
       .catch(() => {});

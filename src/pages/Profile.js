@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const C = { navy:"#0B1D35", navy2:"#112444", gold:"#C8963E", gold2:"#E8B55A", muted:"#8A9AB5", white:"#FFFFFF" };
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,7 +15,7 @@ function Profile() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/users/${userId}`)
+    fetch(`${API_URL}/api/users/${userId}`)
       .then(r => r.json())
       .then(data => setProfile({
         name:     data.name     || "",
@@ -34,7 +35,7 @@ function Profile() {
     const payload = { ...profile };
     if (newPassword) payload.password = newPassword;
     try {
-      const res = await fetch(`http://localhost:9090/api/users/${userId}`, {
+      const res = await fetch(`${API_URL}/api/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

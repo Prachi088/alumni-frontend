@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Login() {
   const [enrollment, setEnrollment] = useState("");
   const [email, setEmail]           = useState("");
@@ -19,7 +21,7 @@ function Login() {
 
     try {
       if (isRegister) {
-        const createRes = await fetch("http://localhost:9090/api/users", {
+        const createRes = await fetch(`${API_URL}/api/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: enrollment, email, role, password }),
@@ -30,7 +32,7 @@ function Login() {
         localStorage.setItem("name",   created.name);
         localStorage.setItem("role",   created.role);
       } else {
-        const res = await fetch(`http://localhost:9090/api/users/by-email?email=${encodeURIComponent(email)}`);
+        const res = await fetch(`${API_URL}/api/users/by-email?email=${encodeURIComponent(email)}`);
         if (!res.ok) { setError("No account found. Please register."); setLoading(false); return; }
         const found = await res.json();
         if (!found) { setError("No account found. Please register."); setLoading(false); return; }

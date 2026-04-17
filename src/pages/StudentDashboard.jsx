@@ -51,9 +51,9 @@
 //   const showFlash = (msg, ok=true) => { setFlash({ msg, ok }); setTimeout(()=>setFlash(null), 3000); };
 
 //   const fetchAll = () => {
-//     fetch("http://localhost:9090/api/jobs").then(r=>r.json()).then(setJobs).catch(()=>{});
-//     fetch("http://localhost:9090/api/events").then(r=>r.json()).then(setEvents).catch(()=>{});
-//     fetch("http://localhost:9090/api/users").then(r=>r.json()).then(d=>setAlumni(d.filter(u=>u.role==="alumni"))).catch(()=>{});
+//     fetch(`${API_URL}/api/jobs").then(r=>r.json()).then(setJobs).catch(()=>{});
+//     fetch(`${API_URL}/api/events").then(r=>r.json()).then(setEvents).catch(()=>{});
+//     fetch(`${API_URL}/api/users").then(r=>r.json()).then(d=>setAlumni(d.filter(u=>u.role==="alumni"))).catch(()=>{});
 //   };
 
 //   useEffect(() => { fetchAll(); }, []);
@@ -80,7 +80,7 @@
 
 //   const sendRequest = async (alumniId) => {
 //     if (sentIds.includes(alumniId)) { showFlash("Request already sent!", false); return; }
-//     const res = await fetch("http://localhost:9090/api/connections/send", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ fromId: userId, toId: alumniId }) });
+//     const res = await fetch(`${API_URL}/api/connections/send", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ fromId: userId, toId: alumniId }) });
 //     if (res.ok) {
 //       const updated = [...sentIds, alumniId];
 //       setSentIds(updated); localStorage.setItem("sentRequestIds", JSON.stringify(updated));
@@ -296,6 +296,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 const C = {
   navy:  "#0B1D35", navy2: "#112444", navy3: "#1a3258",
   gold:  "#C8963E", gold2: "#E8B55A", muted: "#8A9AB5", white: "#FFFFFF",
@@ -336,7 +338,7 @@ function ProfileInline({ userId, flash }) {
   const [profile,     setProfile]     = useState({ name:"", email:"", role:"", batch:"", branch:"", company:"", skills:"" });
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/users/${userId}`)
+    fetch(`${API_URL}/api/users/${userId}`)
       .then(r => r.json())
       .then(data => setProfile({
         name:    data.name    || "",
@@ -355,7 +357,7 @@ function ProfileInline({ userId, flash }) {
     const payload = { ...profile };
     if (newPassword) payload.password = newPassword;
     try {
-      const res = await fetch(`http://localhost:9090/api/users/${userId}`, {
+      const res = await fetch(`${API_URL}/api/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -457,9 +459,9 @@ export default function StudentDashboard() {
   const showFlash = (msg, ok = true) => { setFlash({ msg, ok }); setTimeout(() => setFlash(null), 3000); };
 
   const fetchAll = () => {
-    fetch("http://localhost:9090/api/jobs").then(r => r.json()).then(setJobs).catch(() => {});
-    fetch("http://localhost:9090/api/events").then(r => r.json()).then(setEvents).catch(() => {});
-    fetch("http://localhost:9090/api/users").then(r => r.json()).then(d => setAlumni(d.filter(u => u.role === "alumni"))).catch(() => {});
+    fetch(`${API_URL}/api/jobs`).then(r => r.json()).then(setJobs).catch(() => {});
+    fetch(`${API_URL}/api/events`).then(r => r.json()).then(setEvents).catch(() => {});
+    fetch(`${API_URL}/api/users`).then(r => r.json()).then(d => setAlumni(d.filter(u => u.role === "alumni"))).catch(() => {});
   };
 
   useEffect(() => { fetchAll(); }, []);
@@ -467,7 +469,7 @@ export default function StudentDashboard() {
   const applyJob = async (job) => {
     if (appliedIds.includes(job.id)) { showFlash("Already applied!", false); return; }
     try {
-      const res = await fetch(`http://localhost:9090/api/jobs/${job.id}/apply`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
+      const res = await fetch(`${API_URL}/api/jobs/${job.id}/apply`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
       if (res.ok) {
         const updated = [...appliedIds, job.id];
         setApplied(updated); localStorage.setItem("appliedJobIds", JSON.stringify(updated));
@@ -479,7 +481,7 @@ export default function StudentDashboard() {
   const registerEvent = async (event) => {
     if (regIds.includes(event.id)) { showFlash("Already registered!", false); return; }
     try {
-      const res = await fetch(`http://localhost:9090/api/events/${event.id}/register`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
+      const res = await fetch(`${API_URL}/api/events/${event.id}/register`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ userId }) });
       if (res.ok) {
         const updated = [...regIds, event.id];
         setRegIds(updated); localStorage.setItem("registeredEventIds", JSON.stringify(updated));
@@ -491,7 +493,7 @@ export default function StudentDashboard() {
   const sendRequest = async (alumniId) => {
     if (sentIds.includes(alumniId)) { showFlash("Request already sent!", false); return; }
     try {
-      const res = await fetch("http://localhost:9090/api/connections/send", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ fromId: userId, toId: alumniId }) });
+      const res = await fetch(`${API_URL}/api/connections/send`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ fromId: userId, toId: alumniId }) });
       if (res.ok) {
         const updated = [...sentIds, alumniId];
         setSentIds(updated); localStorage.setItem("sentRequestIds", JSON.stringify(updated));

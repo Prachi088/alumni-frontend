@@ -1,5 +1,7 @@
  import React, { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Requests() {
   const [requests, setRequests] = useState([]);
 
@@ -7,19 +9,19 @@ function Requests() {
   const userId = Number(localStorage.getItem("userId")) || 1;
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/connections/pending/${userId}`)
+    fetch(`${API_URL}/api/connections/pending/${userId}`)
       .then((res) => res.json())
       .then((data) => setRequests(data))
       .catch((err) => console.error(err));
   }, []);
 
   const handleAccept = async (id) => {
-    await fetch(`http://localhost:9090/api/connections/accept/${id}`, { method: "PUT" });
+    await fetch(`${API_URL}/api/connections/accept/${id}`, { method: "PUT" });
     setRequests(requests.filter((r) => r.id !== id));
   };
 
   const handleReject = async (id) => {
-    await fetch(`http://localhost:9090/api/connections/reject/${id}`, { method: "PUT" });
+    await fetch(`${API_URL}/api/connections/reject/${id}`, { method: "PUT" });
     setRequests(requests.filter((r) => r.id !== id));
   };
 

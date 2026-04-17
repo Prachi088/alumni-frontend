@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 const C = {
   navy:"#0B1D35", navy2:"#112444", navy3:"#1a3258",
   gold:"#C8963E", gold2:"#E8B55A", gold3:"#F5D078",
@@ -69,20 +71,20 @@ function AlumniDashboard() {
   const flash = (text) => { setMsg(text); setTimeout(()=>setMsg(""), 3000); };
 
   const fetchData = () => {
-    fetch("http://localhost:9090/api/jobs")
+    fetch("${API_URL}/api/jobs")
       .then(r=>r.json())
       .then(data=>setJobs(data.filter(j=>j.postedBy===alumniId)))
       .catch(()=>{});
 
-    fetch("http://localhost:9090/api/events")
+    fetch("${API_URL}/api/events")
       .then(r=>r.json())
       .then(data=>setEvents(data.filter(e=>e.postedBy===alumniId)))
       .catch(()=>{});
 
-    fetch(`http://localhost:9090/api/connections/accepted/${alumniId}`)
+    fetch(`${API_URL}/api/connections/accepted/${alumniId}`)
       .then(r=>r.json()).then(setConnections).catch(()=>{});
 
-    fetch(`http://localhost:9090/api/connections/pending/${alumniId}`)
+    fetch(`${API_URL}/api/connections/pending/${alumniId}`)
       .then(r=>r.json()).then(setRequests).catch(()=>{});
   };
 
@@ -92,7 +94,7 @@ function AlumniDashboard() {
     if (!newJob.title || !newJob.company) { flash("⚠ Title and Company are required"); return; }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:9090/api/jobs", {
+      const res = await fetch("${API_URL}/api/jobs", {
         method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({ ...newJob, postedBy: alumniId }),
       });
@@ -108,7 +110,7 @@ function AlumniDashboard() {
     if (!newEvent.name || !newEvent.date) { flash("⚠ Name and Date are required"); return; }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:9090/api/events", {
+      const res = await fetch("${API_URL}/api/events", {
         method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify({ ...newEvent, postedBy: alumniId }),
       });
@@ -121,27 +123,27 @@ function AlumniDashboard() {
   };
 
   const handleDeleteJob = async (id) => {
-    await fetch(`http://localhost:9090/api/jobs/${id}`, { method:"DELETE" });
+    await fetch(`${API_URL}/api/jobs/${id}`, { method:"DELETE" });
     setJobs(prev=>prev.filter(j=>j.id!==id));
     flash("🗑 Job deleted");
   };
 
   const handleDeleteEvent = async (id) => {
-    await fetch(`http://localhost:9090/api/events/${id}`, { method:"DELETE" });
+    await fetch(`${API_URL}/api/events/${id}`, { method:"DELETE" });
     setEvents(prev=>prev.filter(e=>e.id!==id));
     flash("🗑 Event deleted");
   };
 
   const handleAccept = async (id) => {
-    await fetch(`http://localhost:9090/api/connections/accept/${id}`, { method:"PUT" });
+    await fetch(`${API_URL}/api/connections/accept/${id}`, { method:"PUT" });
     setRequests(prev=>prev.filter(r=>r.id!==id));
     flash("✅ Connection accepted");
-    fetch(`http://localhost:9090/api/connections/accepted/${alumniId}`)
+    fetch(`${API_URL}/api/connections/accepted/${alumniId}`)
       .then(r=>r.json()).then(setConnections).catch(()=>{});
   };
 
   const handleReject = async (id) => {
-    await fetch(`http://localhost:9090/api/connections/reject/${id}`, { method:"PUT" });
+    await fetch(`${API_URL}/api/connections/reject/${id}`, { method:"PUT" });
     setRequests(prev=>prev.filter(r=>r.id!==id));
     flash("Request declined");
   };
@@ -394,7 +396,7 @@ function ProfileInline({ userId, alumniName, flash }) {
   const [profile, setProfile] = useState({ name:"", email:"", role:"", batch:"", branch:"", company:"", skills:"" });
 
   useEffect(() => {
-    fetch(`http://localhost:9090/api/users/${userId}`)
+    fetch(`${API_URL}/api/users/${userId}`)
       .then(r=>r.json())
       .then(data=>setProfile({ name:data.name||"", email:data.email||"", role:data.role||"", batch:data.batch||"", branch:data.branch||"", company:data.company||"", skills:data.skills||"" }))
       .catch(()=>{});
@@ -405,7 +407,7 @@ function ProfileInline({ userId, alumniName, flash }) {
     const payload = { ...profile };
     if (newPassword) payload.password = newPassword;
     try {
-      const res = await fetch(`http://localhost:9090/api/users/${userId}`, {
+      const res = await fetch(`${API_URL}/api/users/${userId}`, {
         method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload),
       });
       if (res.ok) {

@@ -1,5 +1,7 @@
  import React, { useState, useEffect } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:9090";
+
 function Network() {
   const [alumni, setAlumni] = useState([]);
   const [search, setSearch] = useState("");
@@ -8,7 +10,7 @@ function Network() {
 
   useEffect(() => {
     // Load all users from backend
-    fetch("http://localhost:9090/api/users")
+    fetch(`${API_URL}/api/users`)
       .then(r => r.json())
       .then(data => {
         // Exclude self
@@ -35,7 +37,7 @@ function Network() {
   const handleConnect = async (index) => {
     const user = filteredAlumni[index];
     try {
-      await fetch("http://localhost:9090/api/connections", {
+      await fetch(`${API_URL}/api/connections`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ senderId: userId, receiverId: user.id }),
