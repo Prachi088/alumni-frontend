@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
@@ -8,9 +8,9 @@ function Events() {
 
   const role     = localStorage.getItem("role");
   const userId   = Number(localStorage.getItem("userId")) || 1;
-  const registeredIds = JSON.parse(localStorage.getItem("registeredEventIds") || "[]");
 
   useEffect(() => {
+    const registeredIds = JSON.parse(localStorage.getItem("registeredEventIds") || "[]");
     fetch(`${API_URL}/api/events`)
       .then(r => r.json())
       .then(data => setEvents(data.map(e => ({ ...e, registered: registeredIds.includes(e.id) }))))
@@ -20,7 +20,7 @@ function Events() {
           { id:2, name:"Tech Webinar",      date:"June 5", location:"Online",        registered:false },
         ]);
       });
-  }, [registeredIds]);
+  }, []);
 
   const handleRegister = (id) => {
     setEvents(prev => prev.map(e => e.id === id ? { ...e, registered:true } : e));
