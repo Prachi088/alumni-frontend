@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
@@ -9,20 +9,19 @@ function Jobs() {
 
   const role     = localStorage.getItem("role");
   const userId   = Number(localStorage.getItem("userId")) || 1;
-  const appliedIds = JSON.parse(localStorage.getItem("appliedJobIds") || "[]");
 
   useEffect(() => {
+    const appliedIds = JSON.parse(localStorage.getItem("appliedJobIds") || "[]");
     fetch(`${API_URL}/api/jobs`)
       .then(r => r.json())
       .then(data => setJobs(data.map(j => ({ ...j, applied: appliedIds.includes(j.id) }))))
       .catch(() => {
-        // Fallback demo data
         setJobs([
           { id:1, title:"Java Developer",      company:"TCS",     location:"India",  applied:false },
           { id:2, title:"Frontend Developer",  company:"Infosys", location:"Remote", applied:false },
         ]);
       });
-  }, [appliedIds]);
+  }, []);
 
   const filteredJobs = jobs.filter(j =>
     j.title?.toLowerCase().includes(search.toLowerCase()) ||
