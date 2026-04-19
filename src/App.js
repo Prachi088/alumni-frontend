@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import Login            from "./pages/Login";
 import Dashboard        from "./pages/Dashboard";
@@ -13,15 +13,23 @@ import Requests         from "./pages/Requests";
 import Connected        from "./pages/Connected";
 import MyJobs           from "./pages/MyJobs";
 import MyEvents         from "./pages/MyEvents";
-import About            from "./pages/About";       // NEW
+import About            from "./pages/About";
 import Navbar           from "./components/Navbar";
+
+// Redirects "/" to "/about" always
+// Protected pages redirect to "/login" if not logged in
+function ProtectedRoute({ children }) {
+  const userId = localStorage.getItem("userId");
+  if (!userId) return <Navigate to="/login" replace />;
+  return children;
+}
 
 function Layout() {
   const location = useLocation();
 
   const hideNav =
-    location.pathname === "/" ||
-    location.pathname === "/about" ||        // About has its own nav
+    location.pathname === "/about" ||
+    location.pathname === "/login" ||
     location.pathname === "/dashboard" ||
     location.pathname === "/alumni-dashboard" ||
     location.pathname === "/student-dashboard";
@@ -30,19 +38,26 @@ function Layout() {
     <>
       {!hideNav && <Navbar />}
       <Routes>
-        <Route path="/"                   element={<Login />} />
-        <Route path="/about"              element={<About />} />          {/* NEW */}
-        <Route path="/dashboard"          element={<Dashboard />} />
-        <Route path="/alumni-dashboard"   element={<AlumniDashboard />} />
-        <Route path="/student-dashboard"  element={<StudentDashboard />} />
-        <Route path="/network"            element={<Network />} />
-        <Route path="/jobs"               element={<Jobs />} />
-        <Route path="/events"             element={<Events />} />
-        <Route path="/profile"            element={<Profile />} />
-        <Route path="/requests"           element={<Requests />} />
-        <Route path="/connected"          element={<Connected />} />
-        <Route path="/my-jobs"            element={<MyJobs />} />
-        <Route path="/my-events"          element={<MyEvents />} />
+        {/* Default → About */}
+        <Route path="/"                   element={<Navigate to="/about" replace />} />
+        <Route path="/about"              element={<About />} />
+        <Route path="/login"              element={<Login />} />
+
+        {/* Protected routes */}
+        <Route path="/dashboard"          element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/alumni-dashboard"   element={<ProtectedRoute><AlumniDashboard /></ProtectedRoute>} />
+        <Route path="/student-dashboard"  element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+        <Route path="/network"            element={<ProtectedRoute><Network /></ProtectedRoute>} />
+        <Route path="/jobs"               element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
+        <Route path="/events"             element={<ProtectedRoute><Events /></ProtectedRoute>} />
+        <Route path="/profile"            element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/requests"           element={<ProtectedRoute><Requests /></ProtectedRoute>} />
+        <Route path="/connected"          element={<ProtectedRoute><Connected /></ProtectedRoute>} />
+        <Route path="/my-jobs"            element={<ProtectedRoute><MyJobs /></ProtectedRoute>} />
+        <Route path="/my-events"          element={<ProtectedRoute><MyEvents /></ProtectedRoute>} />
+
+        {/* Catch-all → About */}
+        <Route path="*"                   element={<Navigate to="/about" replace />} />
       </Routes>
     </>
   );
