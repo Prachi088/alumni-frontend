@@ -1,10 +1,13 @@
-import React from "react";
+ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
   const navigate  = useNavigate();
   const role      = localStorage.getItem("role");
+
+  // ── ADDED: hamburger state ──
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -23,7 +26,7 @@ function Navbar() {
   });
 
   return (
-    <div style={styles.navbar}>
+    <div style={{ ...styles.navbar, position: "relative" }}>
       <div style={styles.logo}>
         Alumni Portal
         <span style={{ ...styles.roleBadge, background: role === "alumni" ? "#C8963E" : "#5B9EE1" }}>
@@ -31,25 +34,28 @@ function Navbar() {
         </span>
       </div>
 
-      <div style={styles.links}>
-        <Link to="/dashboard"  style={linkStyle("/dashboard")}>Home</Link>
-        <Link to="/requests"   style={linkStyle("/requests")}>Requests</Link>
-        <Link to="/connected"  style={linkStyle("/connected")}>Connections</Link>
-
+      {/* Original links — className added for CSS targeting */}
+      <div className={`nav-links${menuOpen ? " open" : ""}`} style={styles.links}>
+        <Link to="/dashboard"  style={linkStyle("/dashboard")}  onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/requests"   style={linkStyle("/requests")}   onClick={() => setMenuOpen(false)}>Requests</Link>
+        <Link to="/connected"  style={linkStyle("/connected")}  onClick={() => setMenuOpen(false)}>Connections</Link>
         {role === "student" && (
           <>
-            <Link to="/my-jobs"   style={linkStyle("/my-jobs")}>My Jobs</Link>
-            <Link to="/my-events" style={linkStyle("/my-events")}>My Events</Link>
+            <Link to="/my-jobs"   style={linkStyle("/my-jobs")}   onClick={() => setMenuOpen(false)}>My Jobs</Link>
+            <Link to="/my-events" style={linkStyle("/my-events")} onClick={() => setMenuOpen(false)}>My Events</Link>
           </>
         )}
-
-        <Link to="/jobs"    style={linkStyle("/jobs")}>Jobs</Link>
-        <Link to="/events"  style={linkStyle("/events")}>Events</Link>
-        <Link to="/profile" style={linkStyle("/profile")}>Profile</Link>
+        <Link to="/jobs"    style={linkStyle("/jobs")}    onClick={() => setMenuOpen(false)}>Jobs</Link>
+        <Link to="/events"  style={linkStyle("/events")}  onClick={() => setMenuOpen(false)}>Events</Link>
+        <Link to="/profile" style={linkStyle("/profile")} onClick={() => setMenuOpen(false)}>Profile</Link>
       </div>
 
       <div style={styles.right}>
         <span style={styles.profile}>👤</span>
+        {/* ADDED: hamburger — CSS hides on desktop, shows on mobile */}
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <span /><span /><span />
+        </button>
         <button onClick={handleLogout} style={styles.logout}>Logout</button>
       </div>
     </div>
