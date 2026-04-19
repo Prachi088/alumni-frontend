@@ -78,6 +78,11 @@ input::placeholder {
    changes on laptop/desktop.
    ============================================ */
 
+/* ── Mobile bottom nav (hidden on desktop) ── */
+.sati-mobile-nav {
+  display: none;
+}
+
 /* ── Navbar hamburger button (hidden on desktop) ── */
 .hamburger {
   display: none;
