@@ -535,10 +535,10 @@ export default function StudentDashboard() {
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-      <div style={S.portal}>
+      <div style={S.portal} className="sati-portal">
 
         {/* ── Sidebar ── */}
-        <aside style={S.sidebar}>
+        <aside style={S.sidebar} className="sati-sidebar">
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={{ fontSize:13, fontWeight:700, color:C.white }}>SATI Alumni Portal</div>
@@ -562,8 +562,8 @@ export default function StudentDashboard() {
         </aside>
 
         {/* ── Main ── */}
-        <main style={S.main}>
-          <div style={S.topbar}>
+        <main style={S.main} className="sati-main">
+          <div style={S.topbar} className="sati-topbar">
             <div style={{ fontSize:19, fontWeight:800, color:C.white }}>
               {tab === "dashboard"  && "Dashboard"}
               {tab === "jobs"       && "Browse Jobs"}
@@ -577,7 +577,7 @@ export default function StudentDashboard() {
             <div style={{ fontSize:12, color:C.muted }}>{new Date().toLocaleDateString("en-IN", { weekday:"long", day:"numeric", month:"long", year:"numeric" })}</div>
           </div>
 
-          <div style={S.content}>
+          <div style={S.content} className="sati-content">
             {apiError && (
               <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
                 ❌ {apiError} — Check API_URL or backend status
@@ -592,7 +592,7 @@ export default function StudentDashboard() {
             {/* ── DASHBOARD ── */}
             {tab === "dashboard" && (
               <>
-                <div style={S.statsRow}>
+                <div style={S.statsRow} className="sati-stats-row">
                   <div style={S.statCard}><div style={{ fontSize:11, color:C.muted, textTransform:"uppercase", fontWeight:600 }}>Jobs Available</div><div style={{ fontSize:28, fontWeight:800, color:C.white, marginTop:6 }}>{jobs.length}</div></div>
                   <div style={S.statCard}><div style={{ fontSize:11, color:C.muted, textTransform:"uppercase", fontWeight:600 }}>My Applications</div><div style={{ fontSize:28, fontWeight:800, color:C.gold, marginTop:6 }}>{myJobs.length}</div></div>
                   <div style={S.statCard}><div style={{ fontSize:11, color:C.muted, textTransform:"uppercase", fontWeight:600 }}>Events Registered</div><div style={{ fontSize:28, fontWeight:800, color:"#81C784", marginTop:6 }}>{myEvents.length}</div></div>
@@ -626,7 +626,7 @@ export default function StudentDashboard() {
                 <div style={S.cardTitle}>Available Jobs ({jobs.length})</div>
                 {jobs.length === 0 ? <div style={{ color:C.muted }}>No jobs available yet.</div> :
                   jobs.map(j => (
-                    <div key={j.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                    <div key={j.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }} className="sati-list-row">
                       <div>
                         <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{j.title}</div>
                         <div style={{ fontSize:11, color:C.muted }}>{j.company} · 📍 {j.location}</div>
@@ -650,7 +650,7 @@ export default function StudentDashboard() {
                 <div style={S.cardTitle}>Upcoming Events ({events.length})</div>
                 {events.length === 0 ? <div style={{ color:C.muted }}>No events yet.</div> :
                   events.map(e => (
-                    <div key={e.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                    <div key={e.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }} className="sati-list-row">
                       <div>
                         <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{e.name}</div>
                         <div style={{ fontSize:11, color:C.muted }}>📅 {e.date} · 📍 {e.location}</div>
@@ -675,7 +675,7 @@ export default function StudentDashboard() {
                 <input style={S.input} placeholder="Search by name or email..." value={search} onChange={e => setSearch(e.target.value)} />
                 {filteredAlumni.length === 0 ? <div style={{ color:C.muted }}>No alumni found.</div> :
                   filteredAlumni.map(a => (
-                    <div key={a.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                    <div key={a.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }} className="sati-list-row">
                       <div style={{ display:"flex", alignItems:"center", gap:12 }}>
                         <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(200,150,62,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, color:C.gold2, fontSize:13 }}>{(a.name || a.email || "A")[0].toUpperCase()}</div>
                         <div>
@@ -755,6 +755,16 @@ export default function StudentDashboard() {
           </div>
         </main>
       </div>
+
+      {/* Mobile bottom nav */}
+      <nav className="sati-mobile-nav">
+        {NAV.slice(0, 5).map(n => (
+          <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)}>
+            <span>{n.icon}</span>
+            <span className="sati-mobile-nav-label">{n.label.split(" ")[0]}</span>
+          </div>
+        ))}
+      </nav>
     </>
   );
 }

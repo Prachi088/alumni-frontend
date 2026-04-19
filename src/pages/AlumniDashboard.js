@@ -169,16 +169,16 @@ function AlumniDashboard() {
       case "jobs": return (
         <div>
           <div style={{ fontSize:20, fontWeight:800, color:C.white, marginBottom:20 }}>📢 Post a Job</div>
-          <div style={S.form}>
-            <input placeholder="Job Title *"  value={newJob.title}    onChange={e=>setNewJob({...newJob,title:e.target.value})}    style={S.input} />
-            <input placeholder="Company *"    value={newJob.company}  onChange={e=>setNewJob({...newJob,company:e.target.value})}  style={S.input} />
-            <input placeholder="Location"     value={newJob.location} onChange={e=>setNewJob({...newJob,location:e.target.value})} style={S.input} />
+          <div style={S.form} className="sati-form">
+            <input placeholder="Job Title *"  value={newJob.title}    onChange={e=>setNewJob({...newJob,title:e.target.value})}    style={S.input} className="sati-input" />
+            <input placeholder="Company *"    value={newJob.company}  onChange={e=>setNewJob({...newJob,company:e.target.value})}  style={S.input} className="sati-input" />
+            <input placeholder="Location"     value={newJob.location} onChange={e=>setNewJob({...newJob,location:e.target.value})} style={S.input} className="sati-input" />
             <button onClick={handlePostJob} style={S.postBtn} disabled={loading}>Post Job</button>
           </div>
-          <div style={S.grid}>
+          <div style={S.grid} className="sati-grid">
             {jobs.length===0 && <p style={{ color:C.muted }}>No jobs posted yet.</p>}
             {jobs.map(j=>(
-              <div key={j.id} style={S.itemCard}>
+              <div key={j.id} style={S.itemCard} className="sati-item-card">
                 <div style={{ fontSize:14, fontWeight:700, color:C.white, marginBottom:6 }}>{j.title}</div>
                 <div style={{ fontSize:12, color:C.gold }}>{j.company}</div>
                 <div style={{ fontSize:12, color:C.muted }}>📍 {j.location}</div>
@@ -192,16 +192,16 @@ function AlumniDashboard() {
       case "events": return (
         <div>
           <div style={{ fontSize:20, fontWeight:800, color:C.white, marginBottom:20 }}>🗓️ Post an Event</div>
-          <div style={S.form}>
-            <input placeholder="Event Name *"      value={newEvent.name}     onChange={e=>setNewEvent({...newEvent,name:e.target.value})}     style={S.input} />
-            <input placeholder="Date (e.g May 10)" value={newEvent.date}     onChange={e=>setNewEvent({...newEvent,date:e.target.value})}     style={S.input} />
-            <input placeholder="Location"          value={newEvent.location} onChange={e=>setNewEvent({...newEvent,location:e.target.value})} style={S.input} />
+          <div style={S.form} className="sati-form">
+            <input placeholder="Event Name *"      value={newEvent.name}     onChange={e=>setNewEvent({...newEvent,name:e.target.value})}     style={S.input} className="sati-input" />
+            <input placeholder="Date (e.g May 10)" value={newEvent.date}     onChange={e=>setNewEvent({...newEvent,date:e.target.value})}     style={S.input} className="sati-input" />
+            <input placeholder="Location"          value={newEvent.location} onChange={e=>setNewEvent({...newEvent,location:e.target.value})} style={S.input} className="sati-input" />
             <button onClick={handlePostEvent} style={S.postBtn} disabled={loading}>Post Event</button>
           </div>
-          <div style={S.grid}>
+          <div style={S.grid} className="sati-grid">
             {events.length===0 && <p style={{ color:C.muted }}>No events posted yet.</p>}
             {events.map(e=>(
-              <div key={e.id} style={S.itemCard}>
+              <div key={e.id} style={S.itemCard} className="sati-item-card">
                 <div style={{ fontSize:14, fontWeight:700, color:C.white, marginBottom:6 }}>{e.name}</div>
                 <div style={{ fontSize:12, color:C.gold }}>📅 {e.date}</div>
                 <div style={{ fontSize:12, color:C.muted }}>📍 {e.location}</div>
@@ -218,7 +218,7 @@ function AlumniDashboard() {
           {requests.length===0
             ? <p style={{ color:C.muted }}>No pending requests.</p>
             : requests.map(r=>(
-              <div key={r.id} style={{ ...S.card, display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+              <div key={r.id} style={{ ...S.card, display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }} className="sati-request-card">
                 <div style={{ display:"flex", gap:12, alignItems:"center" }}>
                   <div style={{ width:44, height:44, borderRadius:"50%", background:"rgba(200,150,62,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, color:C.gold }}>
                     {(r.name||"?")[0].toUpperCase()}
@@ -228,7 +228,7 @@ function AlumniDashboard() {
                     <div style={{ fontSize:12, color:C.muted }}>{r.role||r.email}</div>
                   </div>
                 </div>
-                <div style={{ display:"flex", gap:10 }}>
+                <div style={{ display:"flex", gap:10 }} className="sati-request-btns">
                   <button onClick={()=>handleAccept(r.id)} style={{ background:"#16a34a", color:"#fff", border:"none", padding:"7px 16px", borderRadius:7, cursor:"pointer", fontWeight:600 }}>✔ Accept</button>
                   <button onClick={()=>handleReject(r.id)} style={{ background:"rgba(239,68,68,0.15)", color:"#ef9090", border:"1px solid rgba(239,68,68,0.3)", padding:"7px 16px", borderRadius:7, cursor:"pointer" }}>✖ Decline</button>
                 </div>
@@ -243,9 +243,9 @@ function AlumniDashboard() {
           <div style={{ fontSize:20, fontWeight:800, color:C.white, marginBottom:20 }}>🤝 Your Connections</div>
           {connections.length===0
             ? <p style={{ color:C.muted }}>No connections yet.</p>
-            : <div style={S.grid}>
+            : <div style={S.grid} className="sati-grid">
                 {connections.map(c=>(
-                  <div key={c.id} style={S.itemCard}>
+                  <div key={c.id} style={S.itemCard} className="sati-item-card">
                     <div style={{ width:44, height:44, borderRadius:"50%", background:"rgba(200,150,62,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, color:C.gold, marginBottom:10 }}>
                       {(c.name||"?")[0].toUpperCase()}
                     </div>
@@ -275,7 +275,7 @@ function AlumniDashboard() {
 
       default: return (
         <>
-          <div style={S.banner}>
+          <div style={S.banner} className="sati-banner">
             <div>
               <h2 style={{ fontSize:20, fontWeight:800, color:C.white, marginBottom:6 }}>Welcome back, {alumniName} 👋</h2>
               <p style={{ fontSize:13, color:C.muted, lineHeight:1.65, maxWidth:500 }}>
@@ -285,7 +285,7 @@ function AlumniDashboard() {
             <button onClick={()=>setActiveNav("jobs")} style={S.postBtn}>Post a Job →</button>
           </div>
 
-          <div style={S.statsRow}>
+          <div style={S.statsRow} className="sati-stats-row">
             {[
               { icon:"💼", label:"Jobs Posted",   value:jobs.length,        color:"#E8B55A", nav:"jobs"      },
               { icon:"📅", label:"Events Posted", value:events.length,      color:"#90B8E8", nav:"events"    },
@@ -307,8 +307,8 @@ function AlumniDashboard() {
             </div>
             {jobs.length===0
               ? <p style={{ color:C.muted, fontSize:13 }}>No jobs posted yet. <span style={{ color:C.gold, cursor:"pointer" }} onClick={()=>setActiveNav("jobs")}>Post one →</span></p>
-              : <div style={S.grid}>{jobs.slice(0,4).map(j=>(
-                  <div key={j.id} style={S.itemCard}>
+              : <div style={S.grid} className="sati-grid">{jobs.slice(0,4).map(j=>(
+                  <div key={j.id} style={S.itemCard} className="sati-item-card">
                     <div style={{ fontSize:13, fontWeight:700, color:C.white }}>{j.title}</div>
                     <div style={{ fontSize:12, color:C.gold, marginTop:4 }}>{j.company}</div>
                     <div style={{ fontSize:12, color:C.muted }}>📍 {j.location}</div>
@@ -324,9 +324,9 @@ function AlumniDashboard() {
                 <div onClick={()=>setActiveNav("requests")} style={{ fontSize:12, color:C.gold, cursor:"pointer", fontWeight:600 }}>View All →</div>
               </div>
               {requests.slice(0,3).map(r=>(
-                <div key={r.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"10px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                <div key={r.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"10px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }} className="sati-request-card">
                   <div style={{ fontSize:13, color:C.white, fontWeight:600 }}>{r.name} <span style={{ color:C.muted, fontWeight:400 }}>wants to connect</span></div>
-                  <div style={{ display:"flex", gap:8 }}>
+                  <div style={{ display:"flex", gap:8 }} className="sati-request-btns">
                     <button onClick={()=>handleAccept(r.id)} style={{ background:"#16a34a", color:"#fff", border:"none", padding:"5px 12px", borderRadius:6, cursor:"pointer", fontSize:12 }}>Accept</button>
                     <button onClick={()=>handleReject(r.id)} style={{ background:"rgba(239,68,68,0.15)", color:"#ef9090", border:"1px solid rgba(239,68,68,0.3)", padding:"5px 12px", borderRadius:6, cursor:"pointer", fontSize:12 }}>Decline</button>
                   </div>
@@ -343,8 +343,8 @@ function AlumniDashboard() {
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-      <div style={S.portal}>
-        <aside style={S.sidebar}>
+      <div style={S.portal} className="sati-portal">
+        <aside style={S.sidebar} className="sati-sidebar">
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={S.brandName}>SATI Alumni Portal</div>
@@ -370,8 +370,8 @@ function AlumniDashboard() {
           </div>
         </aside>
 
-        <main style={S.main}>
-          <div style={S.topbar}>
+        <main style={S.main} className="sati-main">
+          <div style={S.topbar} className="sati-topbar">
             <div>
               <div style={{ fontSize:19, fontWeight:800, color:C.white }}>{NAV.find(n=>n.id===activeNav)?.label||"Dashboard"}</div>
               <div style={{ fontSize:12, color:C.muted, marginTop:2 }}>{new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · SATI Alumni Network</div>
@@ -381,7 +381,7 @@ function AlumniDashboard() {
             </button>
           </div>
 
-          <div style={S.content}>
+          <div style={S.content} className="sati-content">
             {apiError && (
               <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
                 ❌ {apiError} — Check API_URL or backend status
@@ -392,6 +392,17 @@ function AlumniDashboard() {
           </div>
         </main>
       </div>
+
+      {/* Mobile bottom nav */}
+      <nav className="sati-mobile-nav">
+        {NAV.slice(0,5).map(n=>(
+          <div key={n.id} className={`sati-mobile-nav-item${activeNav===n.id?" active":""}`} onClick={()=>setActiveNav(n.id)}>
+            <span>{n.icon}</span>
+            <span className="sati-mobile-nav-label">{n.label.split(" ")[0]}</span>
+            {n.badge ? <span className="sati-mobile-nav-badge">{n.badge}</span> : null}
+          </div>
+        ))}
+      </nav>
     </>
   );
 }
