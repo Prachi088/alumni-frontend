@@ -456,13 +456,6 @@ export default function StudentDashboard() {
   const [flash,      setFlash]    = useState(null);
   const [search,     setSearch]   = useState("");
   const [apiError,   setApiError] = useState(null);
-  const [isMobile,   setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const showFlash = (msg, ok = true) => { setFlash({ msg, ok }); setTimeout(() => setFlash(null), 3000); };
 
@@ -540,12 +533,13 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <>
+    <div style={{ background:C.navy, minHeight:"100vh", fontFamily:"'Open Sans',Arial,sans-serif", color:C.white }}>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
       <div style={S.portal} className="sati-portal">
 
         {/* ── Sidebar ── */}
-        <aside style={{ ...S.sidebar, display: isMobile ? "none" : "flex" }} className="sati-sidebar">
+        <aside style={S.sidebar} className="sati-sidebar">
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={{ fontSize:13, fontWeight:700, color:C.white }}>SATI Alumni Portal</div>
@@ -763,15 +757,15 @@ export default function StudentDashboard() {
         </main>
       </div>
 
-      {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav" style={{ display: isMobile ? "flex" : "none" }}>
+      {/* Mobile bottom nav — inside root div, never leaks out */}
+      <div className="sati-mobile-nav" style={{ display:"none" }}>
         {NAV.slice(0, 5).map(n => (
-          <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)}>
-            <span>{n.icon}</span>
-            <span className="sati-mobile-nav-label">{n.label.split(" ")[0]}</span>
+          <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, cursor:"pointer", padding:"4px 10px", color: tab === n.id ? "#E8B55A" : "#8A9AB5", fontSize:10, fontWeight:600 }}>
+            <span style={{ fontSize:20 }}>{n.icon}</span>
+            <span>{n.label.split(" ")[0]}</span>
           </div>
         ))}
-      </nav>
-    </>
+      </div>
+    </div>
   );
 }

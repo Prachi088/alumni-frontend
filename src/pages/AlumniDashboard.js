@@ -64,13 +64,6 @@ function AlumniDashboard() {
   const [loading,     setLoading]     = useState(false);
   const [msg,         setMsg]         = useState("");
   const [apiError,    setApiError]    = useState(null);
-  const [isMobile,    setIsMobile]    = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const alumniId   = Number(localStorage.getItem("userId")) || 1;
   const alumniName = localStorage.getItem("name") || localStorage.getItem("userName") || "Alumni";
@@ -346,25 +339,28 @@ function AlumniDashboard() {
     }
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+
   return (
-    <>
+    <div style={{ background:C.navy, minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", color:C.white }}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-      <div style={S.portal} className="sati-portal">
-        <aside style={{ ...S.sidebar, display: isMobile ? "none" : "flex" }} className="sati-sidebar">
+
+      {/* ── Desktop layout ── */}
+      <div style={{ display:"flex", minHeight:"100vh" }}>
+
+        {/* Sidebar — hidden on mobile via CSS */}
+        <aside className="sati-sidebar" style={S.sidebar}>
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={S.brandName}>SATI Alumni Portal</div>
             <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Samrat Ashok Technological Institute</div>
             <div style={{ marginTop:6, fontSize:10, padding:"3px 10px", borderRadius:20, background:"rgba(200,150,62,0.15)", color:C.gold2, display:"inline-block", fontWeight:700 }}>ALUMNI</div>
           </div>
-
           <div style={S.navSection}>Main</div>
           {NAV.slice(0,5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>setActiveNav(n.id)} />)}
-
           <div style={S.navSection}>Account</div>
           {NAV.slice(5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>setActiveNav(n.id)} />)}
-
           <div style={S.sidebarFoot}>
             <div style={{ display:"flex", alignItems:"center", gap:10 }}>
               <div style={S.avatar}>{initials}</div>
@@ -377,6 +373,7 @@ function AlumniDashboard() {
           </div>
         </aside>
 
+        {/* Main content */}
         <main style={S.main} className="sati-main">
           <div style={S.topbar} className="sati-topbar">
             <div>
@@ -400,17 +397,17 @@ function AlumniDashboard() {
         </main>
       </div>
 
-      {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav" style={{ display: isMobile ? "flex" : "none" }}>
+      {/* ── Mobile bottom nav — INSIDE the root div so it never leaks out ── */}
+      <div className="sati-mobile-nav" style={{ display:"none" }}>
         {NAV.slice(0,5).map(n=>(
           <div key={n.id} className={`sati-mobile-nav-item${activeNav===n.id?" active":""}`} onClick={()=>setActiveNav(n.id)}>
-            <span>{n.icon}</span>
-            <span className="sati-mobile-nav-label">{n.label.split(" ")[0]}</span>
-            {n.badge ? <span className="sati-mobile-nav-badge">{n.badge}</span> : null}
+            <span style={{ fontSize:20 }}>{n.icon}</span>
+            <span style={{ fontSize:10, fontWeight:600 }}>{n.label.split(" ")[0]}</span>
+            {n.badge ? <span style={{ position:"absolute", top:0, right:4, background:C.gold, color:C.navy, fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:10 }}>{n.badge}</span> : null}
           </div>
         ))}
-      </nav>
-    </>
+      </div>
+    </div>
   );
 }
 
