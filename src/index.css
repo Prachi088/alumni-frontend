@@ -73,17 +73,15 @@ input::placeholder {
   color: rgba(30, 41, 59, 0.4);
 }
 /* ============================================
-   RESPONSIVE ADDITIONS — paste at bottom of index.css
-   These only activate on small screens, nothing
-   changes on laptop/desktop.
+   RESPONSIVE — only activates on small screens
    ============================================ */
 
-/* ── Mobile bottom nav (hidden on desktop) ── */
+/* Hidden on desktop by default */
 .sati-mobile-nav {
   display: none;
 }
 
-/* ── Navbar hamburger button (hidden on desktop) ── */
+/* Hamburger hidden on desktop */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -103,12 +101,11 @@ input::placeholder {
 }
 
 @media (max-width: 768px) {
-  /* Show hamburger */
+
+  /* ── Navbar ── */
   .hamburger {
     display: flex !important;
   }
-
-  /* Hide desktop nav links, show as dropdown when .open */
   .nav-links {
     display: none !important;
     position: absolute;
@@ -128,80 +125,48 @@ input::placeholder {
     padding: 11px 24px !important;
     margin: 0 !important;
     border-bottom: 1px solid rgba(99,102,241,0.06) !important;
-    border-right: none !important;
   }
 
-  /* Dashboard: sidebar collapses to horizontal scroll bar */
+  /* ── Dashboard portal: stack vertically ── */
   .sati-portal {
     flex-direction: column !important;
   }
+
+  /* ── Hide the sidebar completely on mobile ── */
   .sati-sidebar {
-    width: 100% !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    border-right: none !important;
-    border-bottom: 1px solid rgba(200,150,62,0.2) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 50 !important;
-    min-height: unset !important;
-    max-height: 56px !important;
-    align-items: center !important;
-  }
-  /* Hide sidebar brand, footer, section labels on mobile */
-  .sati-brand,
-  .sati-footer,
-  .sati-nav-section {
     display: none !important;
   }
-  /* Nav items become horizontal pills */
-  .sati-nav-wrap {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
+
+  /* ── Main content takes full width ── */
+  .sati-main {
     width: 100% !important;
-    padding: 6px 8px !important;
-    gap: 4px !important;
-    scrollbar-width: none !important;
-  }
-  .sati-nav-item {
-    white-space: nowrap !important;
-    flex-shrink: 0 !important;
-    padding: 7px 12px !important;
-    margin: 0 !important;
-    border-left: none !important;
-    border-bottom: 2px solid transparent !important;
-    font-size: 12px !important;
-  }
-  .sati-nav-item.active {
-    border-left: none !important;
-    border-bottom: 2px solid #C8963E !important;
+    padding-bottom: 65px !important;
   }
 
-  /* Topbar padding */
+  /* ── Topbar ── */
   .sati-topbar {
     padding: 12px 16px !important;
   }
 
-  /* Content padding */
+  /* ── Content area ── */
   .sati-content {
     padding: 16px !important;
   }
 
-  /* Stats: 2 columns instead of 4 */
-  .sati-stats {
+  /* ── Stats grid: 2 columns ── */
+  .sati-stats-row {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
   }
 
-  /* Banner: stack vertically */
+  /* ── Banner: stack ── */
   .sati-banner {
     flex-direction: column !important;
     gap: 12px !important;
     padding: 18px 16px !important;
   }
 
-  /* Post forms: stack inputs */
+  /* ── Post forms ── */
   .sati-form {
     flex-direction: column !important;
   }
@@ -210,21 +175,58 @@ input::placeholder {
     min-width: unset !important;
   }
 
-  /* Item cards: full width */
+  /* ── Item cards: full width ── */
   .sati-item-card {
     width: 100% !important;
   }
 
-  /* Public pages (Jobs, Events, Network, etc.) */
-  .page-container {
-    padding-top: 80px !important;
+  /* ── Show mobile bottom nav ── */
+  .sati-mobile-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #112444;
+    border-top: 1px solid rgba(200,150,62,0.2);
+    z-index: 100;
+    justify-content: space-around;
+    padding: 6px 0 10px;
   }
-  .page-content {
-    padding: 0 16px !important;
+  .sati-mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 4px 10px;
+    color: #8A9AB5;
+    font-size: 10px;
+    position: relative;
   }
-  .page-heading {
-    font-size: 24px !important;
+  .sati-mobile-nav-item.active {
+    color: #E8B55A;
   }
+  .sati-mobile-nav-item span:first-child {
+    font-size: 20px;
+  }
+  .sati-mobile-nav-label {
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .sati-mobile-nav-badge {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    background: #C8963E;
+    color: #0B1D35;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 10px;
+  }
+
+  /* ── Public pages ── */
   .cards-grid > div {
     width: 100% !important;
   }
@@ -235,7 +237,6 @@ input::placeholder {
     min-width: unset !important;
     width: 100% !important;
   }
-  /* Requests card: stack on mobile */
   .request-row {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -244,9 +245,6 @@ input::placeholder {
 }
 
 @media (max-width: 480px) {
-  .sati-stats {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
   .login-card {
     width: 88vw !important;
     padding: 28px 18px !important;
