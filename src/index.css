@@ -23,19 +23,21 @@
 
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%);
+  background: #0B1D35;
   color: #1e293b;
   overflow-x: hidden;
 }
 
 html, body, #root {
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 code {
@@ -65,20 +67,18 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
   border-color: rgba(99, 102, 241, 0.6) !important;
-  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
 }
 
 input::placeholder {
   color: rgba(30, 41, 59, 0.4);
 }
+
 /* ============================================
-   RESPONSIVE ADDITIONS — paste at bottom of index.css
-   These only activate on small screens, nothing
-   changes on laptop/desktop.
+   RESPONSIVE ADDITIONS
    ============================================ */
 
-/* ── Navbar hamburger button (hidden on desktop) ── */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -98,12 +98,10 @@ input::placeholder {
 }
 
 @media (max-width: 768px) {
-  /* Show hamburger */
   .hamburger {
     display: flex !important;
   }
 
-  /* Hide desktop nav links, show as dropdown when .open */
   .nav-links {
     display: none !important;
     position: absolute;
@@ -126,7 +124,6 @@ input::placeholder {
     border-right: none !important;
   }
 
-  /* Dashboard: sidebar collapses to horizontal scroll bar */
   .sati-portal {
     flex-direction: column !important;
   }
@@ -143,13 +140,13 @@ input::placeholder {
     max-height: 56px !important;
     align-items: center !important;
   }
-  /* Hide sidebar brand, footer, section labels on mobile */
+
   .sati-brand,
   .sati-footer,
   .sati-nav-section {
     display: none !important;
   }
-  /* Nav items become horizontal pills */
+
   .sati-nav-wrap {
     display: flex !important;
     flex-direction: row !important;
@@ -173,30 +170,25 @@ input::placeholder {
     border-bottom: 2px solid #C8963E !important;
   }
 
-  /* Topbar padding */
   .sati-topbar {
     padding: 12px 16px !important;
   }
 
-  /* Content padding */
   .sati-content {
     padding: 16px !important;
   }
 
-  /* Stats: 2 columns instead of 4 */
   .sati-stats {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
   }
 
-  /* Banner: stack vertically */
   .sati-banner {
     flex-direction: column !important;
     gap: 12px !important;
     padding: 18px 16px !important;
   }
 
-  /* Post forms: stack inputs */
   .sati-form {
     flex-direction: column !important;
   }
@@ -205,12 +197,10 @@ input::placeholder {
     min-width: unset !important;
   }
 
-  /* Item cards: full width */
   .sati-item-card {
     width: 100% !important;
   }
 
-  /* Public pages (Jobs, Events, Network, etc.) */
   .page-container {
     padding-top: 80px !important;
   }
@@ -230,7 +220,6 @@ input::placeholder {
     min-width: unset !important;
     width: 100% !important;
   }
-  /* Requests card: stack on mobile */
   .request-row {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -247,25 +236,22 @@ input::placeholder {
     padding: 28px 18px !important;
   }
 }
+
 /* ============================================
    DASHBOARD MOBILE — hamburger drawer sidebar
    ============================================ */
 
-/* Hide mobile nav leak completely */
 .sati-mobile-nav { display: none !important; }
 
 @media (max-width: 768px) {
-  /* Show hamburger button */
   .dash-hamburger {
     display: flex !important;
   }
 
-  /* Sidebar hidden off-screen by default on mobile */
   .sati-sidebar {
     transform: translateX(-100%) !important;
   }
 
-  /* Main content takes full width — no left margin */
   .sati-main {
     margin-left: 0 !important;
     width: 100% !important;
