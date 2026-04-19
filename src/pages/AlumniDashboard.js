@@ -22,7 +22,7 @@ const S = {
   main:       { flex:1, overflow:"auto", background:C.navy },
   topbar:     { padding:"20px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid rgba(200,150,62,0.10)", background:"rgba(11,29,53,0.85)", backdropFilter:"blur(10px)", position:"sticky", top:0, zIndex:10 },
   content:    { padding:"28px 32px" },
-  statsRow:   { display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:28 },
+  statsRow:   { display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))", gap:16, marginBottom:28 },
   statCard:   { background:C.navy2, border:"1px solid rgba(200,150,62,0.15)", borderRadius:14, padding:20, cursor:"pointer", transition:"border 0.2s" },
   card:       { background:C.navy2, border:"1px solid rgba(200,150,62,0.12)", borderRadius:14, padding:22, marginBottom:20 },
   cardHeader: { display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:18 },
@@ -341,7 +341,7 @@ function AlumniDashboard() {
   };
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflowX:"hidden", maxWidth:"100vw" }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden" }}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -382,7 +382,7 @@ function AlumniDashboard() {
       </aside>
 
       {/* Main content — offset by sidebar width on desktop */}
-      <main style={{ ...S.main, marginLeft: 260, minWidth: 0, flex: 1, overflowX: "hidden" }} className="sati-main">
+      <main style={{ ...S.main, marginLeft: 260 }} className="sati-main">
         <div style={S.topbar} className="sati-topbar">
           {/* Hamburger — only visible on mobile via CSS */}
           <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
