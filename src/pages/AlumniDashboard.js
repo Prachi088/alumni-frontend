@@ -22,7 +22,7 @@ const S = {
   main:       { flex:1, overflow:"auto", background:C.navy },
   topbar:     { padding:"20px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid rgba(200,150,62,0.10)", background:"rgba(11,29,53,0.85)", backdropFilter:"blur(10px)", position:"sticky", top:0, zIndex:10 },
   content:    { padding:"28px 32px" },
-  statsRow:   { display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))", gap:16, marginBottom:28 },
+  statsRow:   { display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:28 },
   statCard:   { background:C.navy2, border:"1px solid rgba(200,150,62,0.15)", borderRadius:14, padding:20, cursor:"pointer", transition:"border 0.2s" },
   card:       { background:C.navy2, border:"1px solid rgba(200,150,62,0.12)", borderRadius:14, padding:22, marginBottom:20 },
   cardHeader: { display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:18 },
@@ -341,7 +341,7 @@ function AlumniDashboard() {
   };
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflowX:"hidden" }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden", width:"100vw", boxSizing:"border-box" }}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -350,13 +350,15 @@ function AlumniDashboard() {
         <div onClick={()=>setSidebarOpen(false)} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:200 }} />
       )}
 
-      {/* Sidebar — transform controlled by JS so it works on both desktop and mobile */}
-      <aside
-        style={{ ...S.sidebar, position:"fixed", top:0, left:0, bottom:0, zIndex:300,
-          transition:"transform 0.3s ease",
-          transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)" }}
-        className="sati-sidebar"
-      >
+      {/* Sidebar */}
+      <aside style={{
+        ...S.sidebar,
+        position: "fixed",
+        top: 0, left: 0, bottom: 0,
+        zIndex: 300,
+        transform: sidebarOpen ? "translateX(0)" : undefined,
+        transition: "transform 0.3s ease",
+      }} className="sati-sidebar">
         <div style={S.brand}>
           <div style={S.brandLogo}>SATI</div>
           <div style={S.brandName}>SATI Alumni Portal</div>
@@ -379,17 +381,14 @@ function AlumniDashboard() {
         </div>
       </aside>
 
-      {/* Main content — full width, sidebar opens on top via overlay */}
-      <main style={{ ...S.main, marginLeft:0, width:"100%" }} className="sati-main">
+      {/* Main content — offset by sidebar width on desktop */}
+      <main style={{ ...S.main, marginLeft: 260, minWidth: 0, width: "calc(100vw - 260px)", boxSizing:"border-box" }} className="sati-main">
         <div style={S.topbar} className="sati-topbar">
-          {/* Hamburger — always visible, opens sidebar */}
-          <button
-            onClick={()=>setSidebarOpen(!sidebarOpen)}
-            style={{ background:"none", border:"1px solid rgba(200,150,62,0.4)", borderRadius:6, cursor:"pointer", padding:"6px 9px", marginRight:14, flexDirection:"column", gap:5, display:"flex", flexShrink:0 }}
-          >
-            <span style={{ display:"block", width:20, height:2, background:C.white, borderRadius:2 }} />
-            <span style={{ display:"block", width:20, height:2, background:C.white, borderRadius:2 }} />
-            <span style={{ display:"block", width:20, height:2, background:C.white, borderRadius:2 }} />
+          {/* Hamburger — only visible on mobile via CSS */}
+          <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
           </button>
           <div style={{ flex:1 }}>
             <div style={{ fontSize:19, fontWeight:800, color:C.white }}>{NAV.find(n=>n.id===activeNav)?.label||"Dashboard"}</div>
