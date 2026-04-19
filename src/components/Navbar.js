@@ -5,8 +5,6 @@ function Navbar() {
   const location = useLocation();
   const navigate  = useNavigate();
   const role      = localStorage.getItem("role");
-
-  // ── ADDED: hamburger state ──
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -15,13 +13,13 @@ function Navbar() {
   };
 
   const linkStyle = (path) => ({
-    margin: "0 12px",
+    margin: "0 10px",
     textDecoration: "none",
     color: location.pathname === path ? "#6366f1" : "#64748b",
     fontWeight: location.pathname === path ? "700" : "500",
     fontSize: "14px",
     transition: "all 0.3s ease",
-    paddingBottom: location.pathname === path ? "2px" : "0px",
+    paddingBottom: "2px",
     borderBottom: location.pathname === path ? "2px solid #6366f1" : "2px solid transparent",
   });
 
@@ -34,9 +32,10 @@ function Navbar() {
         </span>
       </div>
 
-      {/* Original links — className added for CSS targeting */}
+      {/* Desktop nav links */}
       <div className={`nav-links${menuOpen ? " open" : ""}`} style={styles.links}>
         <Link to="/dashboard"  style={linkStyle("/dashboard")}  onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/network"    style={linkStyle("/network")}    onClick={() => setMenuOpen(false)}>Network</Link>
         <Link to="/requests"   style={linkStyle("/requests")}   onClick={() => setMenuOpen(false)}>Requests</Link>
         <Link to="/connected"  style={linkStyle("/connected")}  onClick={() => setMenuOpen(false)}>Connections</Link>
         {role === "student" && (
@@ -48,11 +47,11 @@ function Navbar() {
         <Link to="/jobs"    style={linkStyle("/jobs")}    onClick={() => setMenuOpen(false)}>Jobs</Link>
         <Link to="/events"  style={linkStyle("/events")}  onClick={() => setMenuOpen(false)}>Events</Link>
         <Link to="/profile" style={linkStyle("/profile")} onClick={() => setMenuOpen(false)}>Profile</Link>
+        <Link to="/about"   style={linkStyle("/about")}   onClick={() => setMenuOpen(false)}>About</Link>
       </div>
 
       <div style={styles.right}>
-        <span style={styles.profile}>👤</span>
-        {/* ADDED: hamburger — CSS hides on desktop, shows on mobile */}
+        <span style={styles.profileIcon}>👤</span>
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
           <span /><span /><span />
         </button>
@@ -63,13 +62,13 @@ function Navbar() {
 }
 
 const styles = {
-  navbar:    { position:"sticky", top:0, zIndex:1000, height:"70px", background:"linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%)", color:"#1e293b", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 40px", boxShadow:"0 4px 20px rgba(0,0,0,0.08)", backdropFilter:"blur(10px)" },
-  logo:      { fontSize:"18px", fontWeight:"800", letterSpacing:"0.5px", display:"flex", alignItems:"center", gap:10, color:"#6366f1" },
-  roleBadge: { fontSize:"11px", padding:"4px 12px", borderRadius:20, fontWeight:700, color:"#fff", background:"linear-gradient(135deg, #6366f1, #8b5cf6)", border:"1px solid rgba(99,102,241,0.3)" },
-  links:     { display:"flex", alignItems:"center" },
-  right:     { display:"flex", alignItems:"center", gap:15 },
-  profile:   { fontSize:"20px", cursor:"pointer", opacity:0.7, transition:"opacity 0.3s" },
-  logout:    { padding:"8px 16px", background:"linear-gradient(135deg, #ef4444, #f87171)", color:"#fff", border:"none", borderRadius:"8px", cursor:"pointer", fontWeight:600, transition:"all 0.3s", boxShadow:"0 4px 12px rgba(239,68,68,0.2)" },
+  navbar:      { position:"sticky", top:0, zIndex:1000, height:"70px", background:"linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%)", color:"#1e293b", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 24px", boxShadow:"0 4px 20px rgba(0,0,0,0.08)" },
+  logo:        { fontSize:"17px", fontWeight:"800", letterSpacing:"0.5px", display:"flex", alignItems:"center", gap:10, color:"#6366f1", flexShrink: 0 },
+  roleBadge:   { fontSize:"11px", padding:"4px 12px", borderRadius:20, fontWeight:700, color:"#fff" },
+  links:       { display:"flex", alignItems:"center", flexWrap: "wrap" },
+  right:       { display:"flex", alignItems:"center", gap:12, flexShrink: 0 },
+  profileIcon: { fontSize:"20px", cursor:"pointer", opacity:0.7 },
+  logout:      { padding:"8px 14px", background:"linear-gradient(135deg, #ef4444, #f87171)", color:"#fff", border:"none", borderRadius:"8px", cursor:"pointer", fontWeight:600, fontSize: 13 },
 };
 
 export default Navbar;

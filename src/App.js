@@ -13,14 +13,15 @@ import Requests         from "./pages/Requests";
 import Connected        from "./pages/Connected";
 import MyJobs           from "./pages/MyJobs";
 import MyEvents         from "./pages/MyEvents";
+import About            from "./pages/About";       // NEW
 import Navbar           from "./components/Navbar";
 
 function Layout() {
   const location = useLocation();
 
-  // Hide Navbar on login AND dashboard pages (they have their own sidebar/topbar)
   const hideNav =
     location.pathname === "/" ||
+    location.pathname === "/about" ||        // About has its own nav
     location.pathname === "/dashboard" ||
     location.pathname === "/alumni-dashboard" ||
     location.pathname === "/student-dashboard";
@@ -30,6 +31,7 @@ function Layout() {
       {!hideNav && <Navbar />}
       <Routes>
         <Route path="/"                   element={<Login />} />
+        <Route path="/about"              element={<About />} />          {/* NEW */}
         <Route path="/dashboard"          element={<Dashboard />} />
         <Route path="/alumni-dashboard"   element={<AlumniDashboard />} />
         <Route path="/student-dashboard"  element={<StudentDashboard />} />
