@@ -64,6 +64,7 @@ function AlumniDashboard() {
   const [loading,     setLoading]     = useState(false);
   const [msg,         setMsg]         = useState("");
   const [apiError,    setApiError]    = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const alumniId   = Number(localStorage.getItem("userId")) || 1;
   const alumniName = localStorage.getItem("name") || localStorage.getItem("userName") || "Alumni";
@@ -339,74 +340,75 @@ function AlumniDashboard() {
     }
   };
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-
   return (
-    <div style={{ background:C.navy, minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", color:C.white }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden" }}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-      {/* ── Desktop layout ── */}
-      <div style={{ display:"flex", minHeight:"100vh" }}>
+      {/* Dark overlay when sidebar open on mobile */}
+      {sidebarOpen && (
+        <div onClick={()=>setSidebarOpen(false)} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:200 }} />
+      )}
 
-        {/* Sidebar — hidden on mobile via CSS */}
-        <aside className="sati-sidebar" style={S.sidebar}>
-          <div style={S.brand}>
-            <div style={S.brandLogo}>SATI</div>
-            <div style={S.brandName}>SATI Alumni Portal</div>
-            <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Samrat Ashok Technological Institute</div>
-            <div style={{ marginTop:6, fontSize:10, padding:"3px 10px", borderRadius:20, background:"rgba(200,150,62,0.15)", color:C.gold2, display:"inline-block", fontWeight:700 }}>ALUMNI</div>
-          </div>
-          <div style={S.navSection}>Main</div>
-          {NAV.slice(0,5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>setActiveNav(n.id)} />)}
-          <div style={S.navSection}>Account</div>
-          {NAV.slice(5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>setActiveNav(n.id)} />)}
-          <div style={S.sidebarFoot}>
-            <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-              <div style={S.avatar}>{initials}</div>
-              <div>
-                <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{alumniName}</div>
-                <div style={{ fontSize:11, color:C.gold }}>Alumni</div>
-              </div>
-              <div onClick={()=>setActiveNav("profile")} style={{ marginLeft:"auto", cursor:"pointer", color:C.muted, fontSize:15 }} title="Edit Profile">✏</div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main content */}
-        <main style={S.main} className="sati-main">
-          <div style={S.topbar} className="sati-topbar">
+      {/* Sidebar */}
+      <aside style={{
+        ...S.sidebar,
+        position: "fixed",
+        top: 0, left: 0, bottom: 0,
+        zIndex: 300,
+        transform: sidebarOpen ? "translateX(0)" : undefined,
+        transition: "transform 0.3s ease",
+      }} className="sati-sidebar">
+        <div style={S.brand}>
+          <div style={S.brandLogo}>SATI</div>
+          <div style={S.brandName}>SATI Alumni Portal</div>
+          <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Samrat Ashok Technological Institute</div>
+          <div style={{ marginTop:6, fontSize:10, padding:"3px 10px", borderRadius:20, background:"rgba(200,150,62,0.15)", color:C.gold2, display:"inline-block", fontWeight:700 }}>ALUMNI</div>
+        </div>
+        <div style={S.navSection}>Main</div>
+        {NAV.slice(0,5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>{ setActiveNav(n.id); setSidebarOpen(false); }} />)}
+        <div style={S.navSection}>Account</div>
+        {NAV.slice(5).map(n=><NavItem key={n.id} {...n} active={activeNav===n.id} onClick={()=>{ setActiveNav(n.id); setSidebarOpen(false); }} />)}
+        <div style={S.sidebarFoot}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <div style={S.avatar}>{initials}</div>
             <div>
-              <div style={{ fontSize:19, fontWeight:800, color:C.white }}>{NAV.find(n=>n.id===activeNav)?.label||"Dashboard"}</div>
-              <div style={{ fontSize:12, color:C.muted, marginTop:2 }}>{new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · SATI Alumni Network</div>
+              <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{alumniName}</div>
+              <div style={{ fontSize:11, color:C.gold }}>Alumni</div>
             </div>
-            <button onClick={logout} style={{ background:"rgba(239,68,68,0.12)", color:"#ef9090", border:"1px solid rgba(239,68,68,0.25)", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontSize:13, fontWeight:600 }}>
-              Logout
-            </button>
+            <div onClick={()=>{ setActiveNav("profile"); setSidebarOpen(false); }} style={{ marginLeft:"auto", cursor:"pointer", color:C.muted, fontSize:15 }} title="Edit Profile">✏</div>
           </div>
+        </div>
+      </aside>
 
-          <div style={S.content} className="sati-content">
-            {apiError && (
-              <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
-                ❌ {apiError} — Check API_URL or backend status
-              </div>
-            )}
-            {msg && <div style={{ background:"rgba(200,150,62,0.15)", border:"1px solid rgba(200,150,62,0.3)", color:C.gold2, padding:"10px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>{msg}</div>}
-            {renderContent()}
+      {/* Main content — offset by sidebar width on desktop */}
+      <main style={{ ...S.main, marginLeft: 260 }} className="sati-main">
+        <div style={S.topbar} className="sati-topbar">
+          {/* Hamburger — only visible on mobile via CSS */}
+          <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+          </button>
+          <div style={{ flex:1 }}>
+            <div style={{ fontSize:19, fontWeight:800, color:C.white }}>{NAV.find(n=>n.id===activeNav)?.label||"Dashboard"}</div>
+            <div style={{ fontSize:12, color:C.muted, marginTop:2 }}>{new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · SATI Alumni Network</div>
           </div>
-        </main>
-      </div>
+          <button onClick={logout} style={{ background:"rgba(239,68,68,0.12)", color:"#ef9090", border:"1px solid rgba(239,68,68,0.25)", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontSize:13, fontWeight:600 }}>
+            Logout
+          </button>
+        </div>
 
-      {/* ── Mobile bottom nav — INSIDE the root div so it never leaks out ── */}
-      <div className="sati-mobile-nav" style={{ display:"none" }}>
-        {NAV.slice(0,5).map(n=>(
-          <div key={n.id} className={`sati-mobile-nav-item${activeNav===n.id?" active":""}`} onClick={()=>setActiveNav(n.id)}>
-            <span style={{ fontSize:20 }}>{n.icon}</span>
-            <span style={{ fontSize:10, fontWeight:600 }}>{n.label.split(" ")[0]}</span>
-            {n.badge ? <span style={{ position:"absolute", top:0, right:4, background:C.gold, color:C.navy, fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:10 }}>{n.badge}</span> : null}
-          </div>
-        ))}
-      </div>
+        <div style={S.content} className="sati-content">
+          {apiError && (
+            <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
+              ❌ {apiError} — Check API_URL or backend status
+            </div>
+          )}
+          {msg && <div style={{ background:"rgba(200,150,62,0.15)", border:"1px solid rgba(200,150,62,0.3)", color:C.gold2, padding:"10px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>{msg}</div>}
+          {renderContent()}
+        </div>
+      </main>
     </div>
   );
 }

@@ -456,6 +456,7 @@ export default function StudentDashboard() {
   const [flash,      setFlash]    = useState(null);
   const [search,     setSearch]   = useState("");
   const [apiError,   setApiError] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const showFlash = (msg, ok = true) => { setFlash({ msg, ok }); setTimeout(() => setFlash(null), 3000); };
 
@@ -533,61 +534,70 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <div style={{ background:C.navy, minHeight:"100vh", fontFamily:"'Open Sans',Arial,sans-serif", color:C.white }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden" }}>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
-      <div style={S.portal} className="sati-portal">
+      {/* Dark overlay when sidebar open on mobile */}
+      {sidebarOpen && (
+        <div onClick={()=>setSidebarOpen(false)} style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:200 }} />
+      )}
 
-        {/* ── Sidebar ── */}
-        <aside style={S.sidebar} className="sati-sidebar">
-          <div style={S.brand}>
-            <div style={S.brandLogo}>SATI</div>
-            <div style={{ fontSize:13, fontWeight:700, color:C.white }}>SATI Alumni Portal</div>
-            <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Vidisha, M.P.</div>
-          </div>
-          <div style={S.navSec}>Menu</div>
-          {NAV.slice(0, 7).map(n => <NavItem key={n.id} {...n} active={tab === n.id} onClick={() => setTab(n.id)} />)}
-          <div style={S.navSec}>Account</div>
-          {NAV.slice(7).map(n => <NavItem key={n.id} {...n} active={tab === n.id} onClick={() => setTab(n.id)} />)}
-          <div style={{ marginTop:"auto", padding:16, borderTop:"1px solid rgba(200,150,62,0.12)" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
-              <div style={{ width:34, height:34, borderRadius:"50%", background:`linear-gradient(135deg,${C.gold},${C.gold2})`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, fontSize:12, color:C.navy }}>{initials}</div>
-              <div>
-                <div style={{ fontSize:12, fontWeight:600, color:C.white }}>{name}</div>
-                <div style={{ fontSize:11, color:"#5B9EE1" }}>Student</div>
-              </div>
-              <div onClick={() => setTab("profile")} style={{ marginLeft:"auto", cursor:"pointer", color:C.muted, fontSize:15 }} title="Edit Profile">✏</div>
+      {/* Sidebar */}
+      <aside style={{ ...S.sidebar, position:"fixed", top:0, left:0, bottom:0, zIndex:300, transition:"transform 0.3s ease" }} className="sati-sidebar">
+        <div style={S.brand}>
+          <div style={S.brandLogo}>SATI</div>
+          <div style={{ fontSize:13, fontWeight:700, color:C.white }}>SATI Alumni Portal</div>
+          <div style={{ fontSize:11, color:C.muted, marginTop:2 }}>Vidisha, M.P.</div>
+        </div>
+        <div style={S.navSec}>Menu</div>
+        {NAV.slice(0, 7).map(n => <NavItem key={n.id} {...n} active={tab === n.id} onClick={() => { setTab(n.id); setSidebarOpen(false); }} />)}
+        <div style={S.navSec}>Account</div>
+        {NAV.slice(7).map(n => <NavItem key={n.id} {...n} active={tab === n.id} onClick={() => { setTab(n.id); setSidebarOpen(false); }} />)}
+        <div style={{ marginTop:"auto", padding:16, borderTop:"1px solid rgba(200,150,62,0.12)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
+            <div style={{ width:34, height:34, borderRadius:"50%", background:`linear-gradient(135deg,${C.gold},${C.gold2})`, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, fontSize:12, color:C.navy }}>{initials}</div>
+            <div>
+              <div style={{ fontSize:12, fontWeight:600, color:C.white }}>{name}</div>
+              <div style={{ fontSize:11, color:"#5B9EE1" }}>Student</div>
             </div>
-            <button onClick={logout} style={{ ...S.btn, background:"#ef4444", color:"#fff", width:"100%" }}>Logout</button>
+            <div onClick={() => { setTab("profile"); setSidebarOpen(false); }} style={{ marginLeft:"auto", cursor:"pointer", color:C.muted, fontSize:15 }} title="Edit Profile">✏</div>
           </div>
-        </aside>
+          <button onClick={logout} style={{ ...S.btn, background:"#ef4444", color:"#fff", width:"100%" }}>Logout</button>
+        </div>
+      </aside>
 
-        {/* ── Main ── */}
-        <main style={S.main} className="sati-main">
-          <div style={S.topbar} className="sati-topbar">
-            <div style={{ fontSize:19, fontWeight:800, color:C.white }}>
-              {tab === "dashboard"  && "Dashboard"}
-              {tab === "jobs"       && "Browse Jobs"}
-              {tab === "events"     && "Browse Events"}
-              {tab === "network"    && "Find Alumni"}
-              {tab === "my-jobs"    && "My Applications"}
-              {tab === "my-events"  && "My Registered Events"}
-              {tab === "my-network" && "Sent Requests"}
-              {tab === "profile"    && "My Profile"}
+      {/* Main content */}
+      <main style={{ ...S.main, marginLeft: 240 }} className="sati-main">
+        <div style={S.topbar} className="sati-topbar">
+          {/* Hamburger — shown only on mobile via CSS */}
+          <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+            <span style={{ display:"block", width:22, height:2, background:C.white, borderRadius:2 }} />
+          </button>
+          <div style={{ flex:1, fontSize:19, fontWeight:800, color:C.white }}>
+            {tab === "dashboard"  && "Dashboard"}
+            {tab === "jobs"       && "Browse Jobs"}
+            {tab === "events"     && "Browse Events"}
+            {tab === "network"    && "Find Alumni"}
+            {tab === "my-jobs"    && "My Applications"}
+            {tab === "my-events"  && "My Registered Events"}
+            {tab === "my-network" && "Sent Requests"}
+            {tab === "profile"    && "My Profile"}
+          </div>
+          <div style={{ fontSize:12, color:C.muted }}>{new Date().toLocaleDateString("en-IN", { weekday:"long", day:"numeric", month:"long", year:"numeric" })}</div>
+        </div>
+
+        <div style={S.content} className="sati-content">
+          {apiError && (
+            <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
+              ❌ {apiError} — Check API_URL or backend status
             </div>
-            <div style={{ fontSize:12, color:C.muted }}>{new Date().toLocaleDateString("en-IN", { weekday:"long", day:"numeric", month:"long", year:"numeric" })}</div>
-          </div>
-
-          <div style={S.content} className="sati-content">
-            {apiError && (
-              <div style={{ background:"rgba(239,68,68,0.15)", color:"#ef9a9a", border:"1px solid rgba(239,68,68,0.3)", padding:"12px 18px", borderRadius:8, marginBottom:20, fontSize:13, fontWeight:600 }}>
-                ❌ {apiError} — Check API_URL or backend status
-              </div>
-            )}
-            {flash && (
-              <div style={{ ...S.flash, background: flash.ok ? "rgba(76,175,80,0.15)" : "rgba(239,68,68,0.15)", color: flash.ok ? "#81C784" : "#ef9a9a", border:`1px solid ${flash.ok ? "#81C784" : "#ef9a9a"}` }}>
-                {flash.ok ? "✅" : "❌"} {flash.msg}
-              </div>
+          )}
+          {flash && (
+            <div style={{ ...S.flash, background: flash.ok ? "rgba(76,175,80,0.15)" : "rgba(239,68,68,0.15)", color: flash.ok ? "#81C784" : "#ef9a9a", border:`1px solid ${flash.ok ? "#81C784" : "#ef9a9a"}` }}>
+              {flash.ok ? "✅" : "❌"} {flash.msg}
+            </div>
             )}
 
             {/* ── DASHBOARD ── */}
@@ -756,16 +766,5 @@ export default function StudentDashboard() {
           </div>
         </main>
       </div>
-
-      {/* Mobile bottom nav — inside root div, never leaks out */}
-      <div className="sati-mobile-nav" style={{ display:"none" }}>
-        {NAV.slice(0, 5).map(n => (
-          <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, cursor:"pointer", padding:"4px 10px", color: tab === n.id ? "#E8B55A" : "#8A9AB5", fontSize:10, fontWeight:600 }}>
-            <span style={{ fontSize:20 }}>{n.icon}</span>
-            <span>{n.label.split(" ")[0]}</span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
