@@ -453,6 +453,7 @@ export default function StudentDashboard() {
   const [appliedIds, setApplied]  = useState(() => JSON.parse(localStorage.getItem("appliedJobIds")  || "[]"));
   const [regIds,     setRegIds]   = useState(() => JSON.parse(localStorage.getItem("registeredEventIds") || "[]"));
   const [sentIds,    setSentIds]  = useState(() => JSON.parse(localStorage.getItem("sentRequestIds") || "[]"));
+  const [acceptedIds, setAcceptedIds] = useState([]);
   const [flash,      setFlash]    = useState(null);
   const [search,     setSearch]   = useState("");
   const [apiError,   setApiError] = useState(null);
@@ -467,6 +468,7 @@ export default function StudentDashboard() {
     fetch(`${API_URL}/api/jobs`).then(r => r.json()).then(setJobs).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
     fetch(`${API_URL}/api/events`).then(r => r.json()).then(setEvents).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
     fetch(`${API_URL}/api/users`).then(r => r.json()).then(d => setAlumni(d.filter(u => u.role === "alumni"))).then(() => successCount++).catch(() => setApiError("Backend not reachable"));
+    fetch(`${API_URL}/api/connections/accepted/${userId}`).then(r => r.json()).then(data => setAcceptedIds(data.map(c => c.userId))).catch(() => {});
   };
 
   useEffect(() => { fetchAll(); }, []);
@@ -745,15 +747,21 @@ export default function StudentDashboard() {
                 <div style={S.cardTitle}>Sent Connection Requests ({sentIds.length})</div>
                 {sentIds.length === 0
                   ? <div style={{ color:C.muted }}>No requests sent yet. Go to Find Alumni to connect!</div>
-                  : alumni.filter(a => sentIds.includes(a.id)).map(a => (
-                      <div key={a.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
-                        <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(200,150,62,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, color:C.gold2, fontSize:13 }}>{(a.name || a.email || "A")[0].toUpperCase()}</div>
-                        <div>
-                          <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{a.name || a.email}</div>
-                          <div style={{ fontSize:11, color:"#E8B55A", fontWeight:600 }}>⏳ Request Pending</div>
+                  : alumni.filter(a => sentIds.includes(a.id)).map(a => {
+                      const isAccepted = acceptedIds.includes(a.id);
+                      return (
+                        <div key={a.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 0", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                          <div style={{ width:36, height:36, borderRadius:"50%", background:"rgba(200,150,62,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, color:C.gold2, fontSize:13 }}>{(a.name || a.email || "A")[0].toUpperCase()}</div>
+                          <div>
+                            <div style={{ fontSize:13, fontWeight:600, color:C.white }}>{a.name || a.email}</div>
+                            {isAccepted
+                              ? <div style={{ fontSize:11, color:"#81C784", fontWeight:600 }}>✔ Connected</div>
+                              : <div style={{ fontSize:11, color:"#E8B55A", fontWeight:600 }}>⏳ Request Pending</div>
+                            }
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      );
+                    })
                 }
               </div>
             )}
