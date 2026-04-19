@@ -64,6 +64,13 @@ function AlumniDashboard() {
   const [loading,     setLoading]     = useState(false);
   const [msg,         setMsg]         = useState("");
   const [apiError,    setApiError]    = useState(null);
+  const [isMobile,    setIsMobile]    = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const alumniId   = Number(localStorage.getItem("userId")) || 1;
   const alumniName = localStorage.getItem("name") || localStorage.getItem("userName") || "Alumni";
@@ -344,7 +351,7 @@ function AlumniDashboard() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       <div style={S.portal} className="sati-portal">
-        <aside style={S.sidebar} className="sati-sidebar">
+        <aside style={{ ...S.sidebar, display: isMobile ? "none" : "flex" }} className="sati-sidebar">
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={S.brandName}>SATI Alumni Portal</div>
@@ -394,7 +401,7 @@ function AlumniDashboard() {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav" style={{display:"none"}}>
+      <nav className="sati-mobile-nav" style={{ display: isMobile ? "flex" : "none" }}>
         {NAV.slice(0,5).map(n=>(
           <div key={n.id} className={`sati-mobile-nav-item${activeNav===n.id?" active":""}`} onClick={()=>setActiveNav(n.id)}>
             <span>{n.icon}</span>

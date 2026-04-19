@@ -456,6 +456,13 @@ export default function StudentDashboard() {
   const [flash,      setFlash]    = useState(null);
   const [search,     setSearch]   = useState("");
   const [apiError,   setApiError] = useState(null);
+  const [isMobile,   setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const showFlash = (msg, ok = true) => { setFlash({ msg, ok }); setTimeout(() => setFlash(null), 3000); };
 
@@ -538,7 +545,7 @@ export default function StudentDashboard() {
       <div style={S.portal} className="sati-portal">
 
         {/* ── Sidebar ── */}
-        <aside style={S.sidebar} className="sati-sidebar">
+        <aside style={{ ...S.sidebar, display: isMobile ? "none" : "flex" }} className="sati-sidebar">
           <div style={S.brand}>
             <div style={S.brandLogo}>SATI</div>
             <div style={{ fontSize:13, fontWeight:700, color:C.white }}>SATI Alumni Portal</div>
@@ -757,7 +764,7 @@ export default function StudentDashboard() {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav" style={{display:"none"}}>
+      <nav className="sati-mobile-nav" style={{ display: isMobile ? "flex" : "none" }}>
         {NAV.slice(0, 5).map(n => (
           <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)}>
             <span>{n.icon}</span>
