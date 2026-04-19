@@ -394,7 +394,7 @@ function AlumniDashboard() {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav">
+      <nav className="sati-mobile-nav" style={{display:"none"}}>
         {NAV.slice(0,5).map(n=>(
           <div key={n.id} className={`sati-mobile-nav-item${activeNav===n.id?" active":""}`} onClick={()=>setActiveNav(n.id)}>
             <span>{n.icon}</span>

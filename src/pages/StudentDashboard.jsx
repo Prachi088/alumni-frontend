@@ -757,7 +757,7 @@ export default function StudentDashboard() {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="sati-mobile-nav">
+      <nav className="sati-mobile-nav" style={{display:"none"}}>
         {NAV.slice(0, 5).map(n => (
           <div key={n.id} className={`sati-mobile-nav-item${tab === n.id ? " active" : ""}`} onClick={() => setTab(n.id)}>
             <span>{n.icon}</span>
