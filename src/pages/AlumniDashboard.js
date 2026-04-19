@@ -341,7 +341,7 @@ function AlumniDashboard() {
   };
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden" }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans','Roboto',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden", width:"100vw", boxSizing:"border-box" }}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -382,7 +382,7 @@ function AlumniDashboard() {
       </aside>
 
       {/* Main content — offset by sidebar width on desktop */}
-      <main style={{ ...S.main, marginLeft: 260 }} className="sati-main">
+      <main style={{ ...S.main, marginLeft: 260, minWidth: 0, width: "calc(100vw - 260px)", boxSizing:"border-box" }} className="sati-main">
         <div style={S.topbar} className="sati-topbar">
           {/* Hamburger — only visible on mobile via CSS */}
           <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
