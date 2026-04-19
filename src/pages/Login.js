@@ -3,6 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
+const EyeIcon = ({ open }) => open ? (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>
+) : (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+    <line x1="1" y1="1" x2="23" y2="23"/>
+  </svg>
+);
+
 function Login() {
   const [enrollment, setEnrollment] = useState("");
   const [email, setEmail]           = useState("");
@@ -11,6 +24,7 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError]           = useState("");
   const [loading, setLoading]       = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -66,8 +80,27 @@ function Login() {
         {isRegister && (
           <input type="text" placeholder="Full Name / Enrollment No." value={enrollment} onChange={e=>setEnrollment(e.target.value)} style={styles.input} />
         )}
-        <input type="email"    placeholder="Email ID"  value={email}    onChange={e=>setEmail(e.target.value)}    style={styles.input} />
-        <input type="password" placeholder="Password"  value={password} onChange={e=>setPassword(e.target.value)} style={styles.input} />
+        <input type="email" placeholder="Email ID" value={email} onChange={e=>setEmail(e.target.value)} style={styles.input} />
+
+        {/* Password field with eye toggle */}
+        <div style={{ position:"relative", margin:"5px 0" }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            style={{ ...styles.input, margin:0, paddingRight:42 }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(p => !p)}
+            style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#8A9AB5", padding:0, display:"flex", alignItems:"center" }}
+            title={showPassword ? "Hide password" : "Show password"}
+          >
+            <EyeIcon open={showPassword} />
+          </button>
+        </div>
+
         {isRegister && (
           <select value={role} onChange={e=>setRole(e.target.value)} style={styles.input}>
             <option value="student">Student</option>
