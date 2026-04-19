@@ -316,7 +316,7 @@ const S = {
   cardTitle: { fontSize:15, fontWeight:700, color:C.white, marginBottom:14 },
   input:     { width:"100%", padding:"9px 12px", borderRadius:7, border:"1px solid rgba(200,150,62,0.25)", background:"rgba(255,255,255,0.05)", color:C.white, fontSize:13, marginBottom:10, boxSizing:"border-box", fontFamily:"inherit" },
   btn:       { padding:"9px 18px", borderRadius:7, border:"none", cursor:"pointer", fontWeight:600, fontSize:13, fontFamily:"inherit" },
-  statsRow:  { display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:14, marginBottom:20 },
+  statsRow:  { display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))", gap:14, marginBottom:20 },
   statCard:  { background:C.navy2, border:"1px solid rgba(200,150,62,0.15)", borderRadius:12, padding:18 },
   flash:     { padding:"10px 16px", borderRadius:8, marginBottom:16, fontSize:13, fontWeight:600 },
 };
