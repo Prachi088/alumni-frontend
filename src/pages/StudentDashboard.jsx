@@ -534,7 +534,7 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden" }}>
+    <div style={{ display:"flex", minHeight:"100vh", fontFamily:"'Open Sans',Arial,sans-serif", background:C.navy, color:C.white, position:"relative", overflow:"hidden", width:"100vw", boxSizing:"border-box" }}>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
       {/* Dark overlay when sidebar open on mobile */}
@@ -567,7 +567,7 @@ export default function StudentDashboard() {
       </aside>
 
       {/* Main content */}
-      <main style={{ ...S.main, marginLeft: 240 }} className="sati-main">
+      <main style={{ ...S.main, marginLeft: 240, minWidth: 0, width: "calc(100vw - 240px)", boxSizing:"border-box" }} className="sati-main">
         <div style={S.topbar} className="sati-topbar">
           {/* Hamburger — shown only on mobile via CSS */}
           <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="dash-hamburger" style={{ display:"none", background:"none", border:"none", cursor:"pointer", padding:"4px 8px", marginRight:12, flexDirection:"column", gap:5 }}>
