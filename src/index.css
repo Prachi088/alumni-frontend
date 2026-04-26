@@ -1,84 +1,226 @@
+/* =====================================================
+   PREMIUM MODERN DESIGN SYSTEM
+   Alumni Portal - Samrat Ashok Technological Institute
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+
+/* ===== COLOR PALETTE ===== */
+:root {
+  /* Primary Brand Colors */
+  --color-primary: #6366f1;
+  --color-primary-light: #818cf8;
+  --color-primary-dark: #4f46e5;
+
+  /* Accent Colors */
+  --color-accent-gold: #d4a574;
+  --color-accent-gold-light: #e8b86e;
+  --color-accent-gold-dark: #c89968;
+  --color-accent-blue: #5b9ee1;
+  --color-accent-green: #10b981;
+  --color-accent-red: #ef4444;
+
+  /* Neutrals - Premium Grays */
+  --color-dark-bg: #0f1419;
+  --color-dark-card: #1a1f2e;
+  --color-dark-surface: #25293d;
+  --color-dark-hover: #2d3142;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-subtle: #64748b;
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-border-light: rgba(148, 163, 184, 0.08);
+
+  /* Shadows - Premium depth */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.24);
+  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.32);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.15);
+
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-accent: 'Syne', 'Inter', sans-serif;
+}
+
+/* ===== GLOBAL RESET ===== */
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: rgba(99, 102, 241, 0.4) rgba(255, 255, 255, 0.2);
+  scrollbar-color: rgba(99, 102, 241, 0.5) transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 *::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
-  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.5);
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.6);
+  background: rgba(99, 102, 241, 0.7);
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #0B1D35;
-  color: #1e293b;
-  overflow-x: hidden;
-}
-
+/* ===== BASE STYLES ===== */
 html, body, #root {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, #1a1f2e 100%);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
 }
 
+code {
+  font-family: 'Fira Code', monospace;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: 2.5rem; font-weight: 800; font-family: var(--font-accent); letter-spacing: -0.02em; }
+h2 { font-size: 2rem; font-weight: 700; font-family: var(--font-accent); letter-spacing: -0.01em; }
+h3 { font-size: 1.5rem; font-weight: 700; font-family: var(--font-accent); }
+h4 { font-size: 1.25rem; font-weight: 600; }
+h5 { font-size: 1.1rem; font-weight: 600; }
+h6 { font-size: 1rem; font-weight: 600; }
+
+p { color: var(--color-text-secondary); font-weight: 400; }
+
+/* ===== BUTTONS ===== */
 button {
   font-family: inherit;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  border-radius: 8px;
+  outline: none;
 }
 
-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-button:active:not(:disabled) {
+button:not(:disabled) {
   transform: translateY(0);
 }
 
+button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* Primary Button */
+.btn-primary {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: white;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:not(:disabled):hover {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  padding: 10px 20px;
+  background: var(--color-dark-hover);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+}
+
+.btn-secondary:not(:disabled):hover {
+  background: rgba(148, 163, 184, 0.1);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* Accent Button */
+.btn-accent {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--color-accent-gold) 0%, var(--color-accent-gold-light) 100%);
+  color: var(--color-dark-bg);
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+}
+
+/* ===== INPUTS ===== */
 input, select, textarea {
   font-family: inherit;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-muted);
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: rgba(99, 102, 241, 0.6) !important;
-  background-color: rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), var(--shadow-sm);
+  outline: none;
 }
 
-input::placeholder {
-  color: rgba(30, 41, 59, 0.4);
+input:disabled, select:disabled, textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* ============================================
-   RESPONSIVE ADDITIONS
-   ============================================ */
+/* ===== CARDS ===== */
+.card, .card-modern {
+  background: var(--color-dark-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
 
+.card:hover, .card-modern:hover {
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: var(--shadow-md);
+}
+
+.card-premium {
+  background: linear-gradient(135deg, var(--color-dark-card) 0%, rgba(30, 41, 59, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -88,15 +230,17 @@ input::placeholder {
   background: none;
   border: none;
 }
+
 .hamburger span {
   display: block;
   width: 22px;
   height: 2px;
-  background: #64748b;
+  background: var(--color-text-secondary);
   border-radius: 2px;
   transition: all 0.3s;
 }
 
+/* ===== NAVBAR RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hamburger {
     display: flex !important;
@@ -108,31 +252,39 @@ input::placeholder {
     top: 70px;
     left: 0;
     right: 0;
-    background: #fff;
+    background: var(--color-dark-card);
     flex-direction: column !important;
     padding: 8px 0;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    box-shadow: var(--shadow-lg);
     z-index: 999;
+    border-bottom: 1px solid var(--color-border);
   }
+
   .nav-links.open {
     display: flex !important;
   }
+
   .nav-links a {
     padding: 11px 24px !important;
     margin: 0 !important;
-    border-bottom: 1px solid rgba(99,102,241,0.06) !important;
+    border-bottom: 1px solid var(--color-border-light) !important;
     border-right: none !important;
+    transition: all 0.2s ease;
   }
 
-  .sati-portal {
-    flex-direction: column !important;
+  .nav-links a:hover {
+    background: var(--color-dark-hover);
   }
+}
+
+/* ===== DASHBOARD RESPONSIVE ===== */
+@media (max-width: 768px) {
   .sati-sidebar {
     width: 100% !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     border-right: none !important;
-    border-bottom: 1px solid rgba(200,150,62,0.2) !important;
+    border-bottom: 1px solid var(--color-border) !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 50 !important;
@@ -156,6 +308,7 @@ input::placeholder {
     gap: 4px !important;
     scrollbar-width: none !important;
   }
+
   .sati-nav-item {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
@@ -164,10 +317,13 @@ input::placeholder {
     border-left: none !important;
     border-bottom: 2px solid transparent !important;
     font-size: 12px !important;
+    transition: all 0.2s ease !important;
   }
+
   .sati-nav-item.active {
     border-left: none !important;
-    border-bottom: 2px solid #C8963E !important;
+    border-bottom: 2px solid var(--color-accent-gold) !important;
+    color: var(--color-accent-gold) !important;
   }
 
   .sati-topbar {
@@ -192,6 +348,7 @@ input::placeholder {
   .sati-form {
     flex-direction: column !important;
   }
+
   .sati-form input {
     width: 100% !important;
     min-width: unset !important;
@@ -200,106 +357,15 @@ input::placeholder {
   .sati-item-card {
     width: 100% !important;
   }
-
-  .page-container {
-    padding-top: 80px !important;
-  }
-  .page-content {
-    padding: 0 16px !important;
-  }
-  .page-heading {
-    font-size: 24px !important;
-  }
-  .cards-grid > div {
-    width: 100% !important;
-  }
-  .page-form {
-    flex-direction: column !important;
-  }
-  .page-form input {
-    min-width: unset !important;
-    width: 100% !important;
-  }
-  .request-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-  }
 }
 
-@media (max-width: 480px) {
-  .sati-stats {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  .login-card {
-    width: 88vw !important;
-    padding: 28px 18px !important;
-  }
-}
-
-/* ============================================
-   DASHBOARD MOBILE — hamburger drawer sidebar
-   ============================================ */
-
-.sati-mobile-nav { display: none !important; }
-
+/* ===== MOBILE LAYOUT ===== */
 @media (max-width: 768px) {
-  .dash-hamburger {
-    display: flex !important;
-  }
-
-  .sati-sidebar {
-    transform: translateX(-100%) !important;
-  }
-
-  .sati-main {
-    margin-left: 0 !important;
-    width: 100% !important;
-  }
-
-  .sati-content {
-    padding: 16px !important;
-  }
-
-  .sati-topbar {
-    padding: 12px 16px !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-
-  .sati-stats-row {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-  }
-
-  .sati-banner {
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-
-  .sati-form {
-    flex-direction: column !important;
-  }
-
-  .sati-item-card {
-    width: 100% !important;
-  }
-}
-/* =============================================
-   PASTE THIS INTO YOUR index.css
-   This fixes the sidebar overlapping main content on mobile
-   ============================================= */
-
-/* Sidebar hidden by default on mobile */
-@media (max-width: 768px) {
-
-  /* The outer wrapper — stack vertically */
   .sati-layout {
     flex-direction: column !important;
     position: relative;
   }
 
-  /* Sidebar slides off-screen by default */
   .sati-sidebar {
     position: fixed !important;
     top: 0;
@@ -312,12 +378,10 @@ input::placeholder {
     overflow-y: auto;
   }
 
-  /* When sidebar is open (add/remove this class via JS) */
   .sati-sidebar.open {
     transform: translateX(0);
   }
 
-  /* Dark overlay behind sidebar */
   .sidebar-overlay {
     display: none;
     position: fixed;
@@ -330,47 +394,190 @@ input::placeholder {
     display: block;
   }
 
-  /* Main content takes full width */
   .sati-main {
     width: 100% !important;
     margin-left: 0 !important;
     padding: 16px !important;
   }
 
-  /* Hamburger button — show on mobile */
   .hamburger-btn {
     display: flex !important;
   }
 
-  /* Stats cards — 2 per row on phone */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
   }
 
-  /* Quick action buttons — 2 per row */
   .quick-actions-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
   }
 
-  /* Cards in Jobs/Events/Network — full width */
   .cards-grid {
     grid-template-columns: 1fr !important;
   }
 }
 
-/* Hamburger hidden on desktop */
+@media (max-width: 480px) {
+  .sati-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .login-card {
+    width: 88vw !important;
+    padding: 28px 18px !important;
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+}
+
+/* ===== DESKTOP HAMBURGER HIDDEN ===== */
 .hamburger-btn {
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(200, 150, 62, 0.15);
-  border: 1px solid #C8963E;
+  background: rgba(212, 165, 116, 0.1);
+  border: 1px solid var(--color-accent-gold);
   border-radius: 8px;
   padding: 8px 10px;
   cursor: pointer;
-  color: #C8963E;
+  color: var(--color-accent-gold);
   font-size: 20px;
   margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  background: rgba(212, 165, 116, 0.15);
+  box-shadow: 0 0 12px rgba(212, 165, 116, 0.2);
+}
+
+/* ===== UTILITY ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 24px rgba(99, 102, 241, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s ease-out forwards;
+}
+
+/* ===== PAGE LAYOUTS ===== */
+.page-container {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.page-content {
+  padding: 0 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: var(--font-accent);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.page-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.request-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-light);
+  transition: all 0.2s ease;
+}
+
+.request-row:hover {
+  background: rgba(148, 163, 184, 0.05);
+  padding-left: 8px;
+}
+
+/* ===== SCROLLBAR IMPROVEMENTS ===== */
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

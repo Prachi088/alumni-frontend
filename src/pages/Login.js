@@ -26,6 +26,12 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    // Smooth scroll animation on mount
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = "auto"; };
+  }, []);
+
   const handleSubmit = async () => {
     if (!email || !password) { setError("Email and password are required"); return; }
     if (!email.includes("@")) { setError("Enter a valid email"); return; }
@@ -64,8 +70,9 @@ function Login() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.card}>
+      <div style={styles.backgroundGlow} />
 
+      <div style={styles.card}>
         {/* Back to About */}
         <button onClick={() => navigate("/about")} style={styles.backBtn}>
           ← Back to About
@@ -75,37 +82,35 @@ function Login() {
         <h2 style={styles.title}>Alumni Portal</h2>
         <p style={styles.sub}>Samrat Ashok Technological Institute</p>
 
-        <div style={{ display:"flex", marginBottom:20, borderRadius:8, overflow:"hidden", border:"1px solid rgba(200,150,62,0.3)" }}>
-          {["Login","Register"].map((t,i) => (
-            <button key={t} onClick={()=>setIsRegister(i===1)}
-              style={{ flex:1, padding:"9px", border:"none", cursor:"pointer", fontWeight:600, fontSize:13,
-                background: isRegister===(i===1) ? "linear-gradient(135deg,#C8963E,#E8B55A)" : "transparent",
-                color: isRegister===(i===1) ? "#0B1D35" : "#8A9AB5" }}>{t}
+        <div style={styles.tabContainer}>
+          {["Login", "Register"].map((t, i) => (
+            <button key={t} onClick={() => setIsRegister(i === 1)}
+              style={styles.tab(isRegister === (i === 1))}>{t}
             </button>
           ))}
         </div>
 
         {isRegister && (
           <input type="text" placeholder="Full Name / Enrollment No."
-            value={enrollment} onChange={e=>setEnrollment(e.target.value)} style={styles.input} />
+            value={enrollment} onChange={e => setEnrollment(e.target.value)} style={styles.input} />
         )}
         <input type="email" placeholder="Email ID"
-          value={email} onChange={e=>setEmail(e.target.value)} style={styles.input} />
+          value={email} onChange={e => setEmail(e.target.value)} style={styles.input} />
 
-        <div style={{ position:"relative", margin:"5px 0" }}>
+        <div style={styles.passwordContainer}>
           <input
             type={showPassword ? "text" : "password"} placeholder="Password"
-            value={password} onChange={e=>setPassword(e.target.value)}
-            style={{ ...styles.input, margin:0, paddingRight:42 }}
+            value={password} onChange={e => setPassword(e.target.value)}
+            style={{ ...styles.input, margin: 0, marginBottom: 10, paddingRight: 42 }}
           />
-          <button type="button" onClick={()=>setShowPassword(p=>!p)}
-            style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)", background:"none", border:"none", cursor:"pointer", color:"#8A9AB5", padding:0, display:"flex", alignItems:"center" }}>
+          <button type="button" onClick={() => setShowPassword(p => !p)}
+            style={styles.eyeButton}>
             <EyeIcon open={showPassword} />
           </button>
         </div>
 
         {isRegister && (
-          <select value={role} onChange={e=>setRole(e.target.value)} style={styles.input}>
+          <select value={role} onChange={e => setRole(e.target.value)} style={styles.input}>
             <option value="student">Student</option>
             <option value="alumni">Alumni</option>
           </select>
@@ -122,15 +127,157 @@ function Login() {
 }
 
 const styles = {
-  container: { minHeight:"100vh", display:"flex", justifyContent:"center", alignItems:"center", background:"#0B1D35", padding:"20px" },
-  card:      { background:"#112444", padding:"32px 28px 40px", borderRadius:16, width:"100%", maxWidth:340, textAlign:"center", border:"1px solid rgba(200,150,62,0.2)", boxShadow:"0 20px 60px rgba(0,0,0,0.4)", boxSizing:"border-box" },
-  backBtn:   { display:"block", width:"100%", textAlign:"left", background:"none", border:"none", color:"#8A9AB5", fontSize:13, cursor:"pointer", marginBottom:20, padding:0 },
-  logo:      { width:52, height:52, background:"linear-gradient(135deg,#C8963E,#E8B55A)", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:15, color:"#0B1D35", margin:"0 auto 14px" },
-  title:     { color:"#fff", margin:"0 0 4px", fontSize:19, fontWeight:700 },
-  sub:       { color:"#8A9AB5", fontSize:12, margin:"0 0 22px" },
-  input:     { width:"100%", padding:"11px 14px", margin:"5px 0", borderRadius:8, border:"1px solid rgba(200,150,62,0.25)", background:"rgba(255,255,255,0.06)", color:"#fff", fontSize:13, outline:"none", boxSizing:"border-box" },
-  button:    { width:"100%", padding:12, background:"linear-gradient(135deg,#C8963E,#E8B55A)", color:"#0B1D35", border:"none", borderRadius:8, fontWeight:700, fontSize:14, cursor:"pointer", marginTop:14 },
-  error:     { color:"#ef5350", fontSize:13, margin:"6px 0 0" },
+  container: {
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(135deg, var(--color-dark-bg) 0%, var(--color-dark-card) 100%)",
+    padding: "20px",
+    position: "relative",
+    overflow: "hidden",
+  },
+  backgroundGlow: {
+    position: "absolute",
+    width: "400px",
+    height: "400px",
+    background: "radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)",
+    borderRadius: "50%",
+    top: "-100px",
+    right: "-100px",
+    pointerEvents: "none",
+  },
+  card: {
+    background: "linear-gradient(135deg, var(--color-dark-card) 0%, rgba(26, 31, 46, 0.8) 100%)",
+    padding: "40px 32px",
+    borderRadius: "16px",
+    width: "100%",
+    maxWidth: "360px",
+    textAlign: "center",
+    border: "1px solid rgba(148, 163, 184, 0.15)",
+    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 32px rgba(99, 102, 241, 0.1)",
+    backdropFilter: "blur(10px)",
+    boxSizing: "border-box",
+    position: "relative",
+    zIndex: 1,
+  },
+  backBtn: {
+    display: "block",
+    width: "100%",
+    textAlign: "left",
+    background: "none",
+    border: "none",
+    color: "var(--color-text-muted)",
+    fontSize: "13px",
+    cursor: "pointer",
+    marginBottom: "20px",
+    padding: 0,
+    transition: "all 0.3s ease",
+    fontWeight: "500",
+  },
+  logo: {
+    width: 54,
+    height: 54,
+    background: "linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-light))",
+    borderRadius: 12,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 800,
+    fontSize: 16,
+    color: "var(--color-dark-bg)",
+    margin: "0 auto 16px",
+    boxShadow: "0 8px 16px rgba(212, 165, 116, 0.3)",
+  },
+  title: {
+    color: "var(--color-text-primary)",
+    margin: "0 0 4px",
+    fontSize: 20,
+    fontWeight: 700,
+    fontFamily: "var(--font-accent)",
+  },
+  sub: {
+    color: "var(--color-text-muted)",
+    fontSize: 12,
+    margin: "0 0 24px",
+    fontWeight: "500",
+  },
+  tabContainer: {
+    display: "flex",
+    marginBottom: 22,
+    borderRadius: 8,
+    overflow: "hidden",
+    border: "1px solid rgba(148, 163, 184, 0.1)",
+    background: "rgba(255, 255, 255, 0.03)",
+  },
+  tab: (active) => ({
+    flex: 1,
+    padding: "10px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: 600,
+    fontSize: 13,
+    background: active ? "linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-light))" : "transparent",
+    color: active ? "var(--color-dark-bg)" : "var(--color-text-muted)",
+    transition: "all 0.3s ease",
+  }),
+  input: {
+    width: "100%",
+    padding: "11px 14px",
+    marginBottom: "10px",
+    borderRadius: 8,
+    border: "1px solid rgba(148, 163, 184, 0.15)",
+    background: "rgba(255, 255, 255, 0.05)",
+    color: "var(--color-text-primary)",
+    fontSize: 13,
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    transition: "all 0.3s ease",
+  },
+  passwordContainer: {
+    position: "relative",
+    margin: "5px 0",
+  },
+  eyeButton: {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: "var(--color-text-muted)",
+    padding: 0,
+    display: "flex",
+    alignItems: "center",
+    transition: "all 0.3s ease",
+  },
+  error: {
+    color: "var(--color-accent-red)",
+    fontSize: 12,
+    margin: "8px 0 0",
+    fontWeight: "500",
+    background: "rgba(239, 68, 68, 0.1)",
+    padding: "8px 12px",
+    borderRadius: 6,
+    border: "1px solid rgba(239, 68, 68, 0.2)",
+  },
+  button: {
+    width: "100%",
+    padding: 12,
+    background: "linear-gradient(135deg, var(--color-primary), var(--color-primary-light))",
+    color: "#fff",
+    border: "none",
+    borderRadius: 8,
+    fontWeight: 700,
+    fontSize: 14,
+    cursor: "pointer",
+    marginTop: 18,
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    boxShadow: "0 4px 16px rgba(99, 102, 241, 0.3)",
+    fontFamily: "inherit",
+  },
 };
 
 export default Login;
