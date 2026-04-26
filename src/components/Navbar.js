@@ -60,7 +60,9 @@ function Navbar() {
       {/* Desktop nav links */}
       <div className={`nav-links${menuOpen ? " open" : ""}`} style={styles.links}>
         <Link to="/dashboard"  style={linkStyle("/dashboard")}  onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/feed"       style={linkStyle("/feed")}       onClick={() => setMenuOpen(false)}>Feed</Link>
         <Link to="/network"    style={linkStyle("/network")}    onClick={() => setMenuOpen(false)}>Network</Link>
+        <Link to="/chat"       style={linkStyle("/chat")}       onClick={() => setMenuOpen(false)}>Messages</Link>
         <Link to="/requests"   style={linkStyle("/requests")}   onClick={() => setMenuOpen(false)}>Requests</Link>
         <Link to="/connected"  style={linkStyle("/connected")}  onClick={() => setMenuOpen(false)}>Connections</Link>
         {role === "student" && (

@@ -14,6 +14,14 @@ import Connected        from "./pages/Connected";
 import MyJobs           from "./pages/MyJobs";
 import MyEvents         from "./pages/MyEvents";
 import About            from "./pages/About";
+
+// Modern Premium Components
+import ModernDashboard  from "./pages/ModernDashboard";
+import ModernNetwork    from "./pages/ModernNetwork";
+import ModernChat       from "./pages/ModernChat";
+import ModernProfile    from "./pages/ModernProfile";
+import ModernFeed       from "./pages/ModernFeed";
+
 import Navbar           from "./components/Navbar";
 
 // Redirects "/" to "/about" always

@@ -1,12 +1,15 @@
 {
   "name": "alumni-portal",
-  "version": "0.1.0",
+  "version": "2.0.0",
+  "description": "Premium Alumni Portal - Modern Networking Platform",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "chalk": "^5.6.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "gsap": "^3.12.2",
     "lenis": "^1.0.42",
@@ -21,7 +24,8 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server.js"
   },
   "eslintConfig": {
     "extends": [
